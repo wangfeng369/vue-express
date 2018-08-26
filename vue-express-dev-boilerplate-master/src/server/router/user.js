@@ -11,11 +11,10 @@ router.get('/', function (req, res, next) {
   
     // res.sendfile("./views/index.html");
 });
-
 router.get('/userInfo', function (req, res, next) {
     User.findOne({
             where: {
-                id: 2
+                id: 1
             }
         })
         .then(data => {
