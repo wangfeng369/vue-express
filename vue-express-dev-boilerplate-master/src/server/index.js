@@ -10,7 +10,6 @@ import userRouter from './router/user'
 // 引入history模块
 import history from 'connect-history-api-fallback'
 import fs from 'fs'
-
 // 正式环境时，下面两个模块不需要引入
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
