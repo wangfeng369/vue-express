@@ -17,24 +17,8 @@ const models =[
         "path": "./article.js"
     },
     {
-        "name": "demo",
-        "path": "./demo_tbl.js"
-    },
-    {
-        "name": "Readme",
-        "path": "./Readme.md"
-    },
-    {
-        "name": "text",
-        "path": "./text.js"
-    },
-    {
-        "name": "text1",
-        "path": "./text1.js"
-    },
-    {
-        "name": "user",
-        "path": "./user.js"
+        "name": "goods",
+        "path": "./goods.js"
     },
     {
         "name": "userinfo",

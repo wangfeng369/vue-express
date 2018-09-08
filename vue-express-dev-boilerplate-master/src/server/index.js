@@ -15,7 +15,6 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import config from '../../build/webpack.dev.conf'
-
 const app = express()
 
 // 引入history模式让浏览器进行前端路由页面跳转

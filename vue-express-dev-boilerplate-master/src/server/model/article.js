@@ -3,16 +3,16 @@
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('article', {
 		id: {
-			type: DataTypes.INTEGER(11),
+			type: DataTypes.BIGINT,
 			allowNull: false,
-			defaultValue: '1',
-			primaryKey: true
+			primaryKey: true,
+			autoIncrement: true
 		},
-		articleName: {
+		title: {
 			type: DataTypes.STRING(255),
 			allowNull: false
 		},
-		acticleText: {
+		content: {
 			type: DataTypes.TEXT,
 			allowNull: false
 		}

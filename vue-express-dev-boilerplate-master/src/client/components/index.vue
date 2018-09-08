@@ -21,7 +21,7 @@ export default {
         },
         get(){
             let _this = this
-            _this.$axios.get('/user/userInfo',{'Content-Type':'application/json'})
+            _this.$axios.post('/user/userInfo',{id:'2'},{'Content-Type':'application/json'})
                 .then(function (response) {
                     _this.message = response.data.test.password;
                 })
