@@ -61,7 +61,7 @@ app.use(webpackHotMiddleware(compiler))
 
 app.use(express.static(path.join(__dirname, 'view')))
 app.get('/', function (req, res) {
-  res.sendFile('./views/index.html')
+  res.sendFile('../views/index.html')
 })
 
 // catch 404 and forward to error handler

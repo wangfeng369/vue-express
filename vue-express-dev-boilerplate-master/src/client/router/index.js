@@ -13,7 +13,7 @@ Vue.use(Router)
 
 
 var router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     { name: 'index', path: '/', redirect: '/index' },
     { name: 'index', path: '/index', component: index },
