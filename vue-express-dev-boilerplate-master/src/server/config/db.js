@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize'
 
-const sequelize = new Sequelize('demo','root','',{
+const sequelize = new Sequelize('demo','root','123',{
     host: "localhost",
     dialect: 'mysql',
     port:'3306',
@@ -9,7 +9,9 @@ const sequelize = new Sequelize('demo','root','',{
         min:0,
         idle:1000
     },
-    
+    define:{
+        charset: 'utf8'
+    }
 })
 
 module.exports = sequelize;
