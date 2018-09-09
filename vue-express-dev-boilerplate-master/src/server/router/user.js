@@ -3,6 +3,7 @@ import sequelize from '../config/db'
 const router = express.Router()
 let Student = require('../model/').student
 let Class = require('../model/').class
+let User = require('../model/').user
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
@@ -27,6 +28,26 @@ router.post('/userInfo', function (req, res, next) {
     //     res.send(data)
     // })
 
+})
+
+router.post('/login', function (req, res, next) {
+    console.log(req.body)
+    let username = req.body.userName
+    let pwd = req.body.password
+    User.findOne({
+        where:{
+            userName:username
+        }
+    }).then(data=>{
+        if(data.userName==username&&data.password==pwd){
+            res.send({code:'0'})
+        }else{
+            res.send('用户名或密码错误')
+        }
+    }).catch(error=>{
+        res.send('用户名或密码错误')
+        console.log(error)
+    })
 })
 
 module.exports = router;

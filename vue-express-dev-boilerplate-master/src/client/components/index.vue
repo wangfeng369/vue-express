@@ -1,12 +1,17 @@
 <template>
   <div class="contaniner">
     <div class="" style="width:500px;">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180">
+      <el-table :data="items" :default-sort = "{prop: 'id', order: 'ascending'}" style="width: 100%">
+         <el-table-column type="index" label="序号" width="180">
         </el-table-column>
         <el-table-column prop="name" label="姓名" width="180">
         </el-table-column>
-        <el-table-column prop="address" label="地址">
+        <el-table-column prop="sex" label="性别" width="180">
+          <template slot-scope='scope'>
+            <p>{{scope.row.sex==0?'男':'女'}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column prop="class.name" label="班级">
         </el-table-column>
       </el-table>
     </div>
@@ -22,23 +27,7 @@
       return {
         message: '您好全栈',
         items: [],
-        tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+       
       }
     },
     methods: {
@@ -47,16 +36,24 @@
           path: '/Hello'
         })
       },
-      get() {
+      onload: function(){
         let _this = this
         _this.$axios.post('/user/userInfo', {
             'Content-Type': 'application/json'
           })
           .then(function (response) {
+
+            for(let i=0;i<response.data.lenght;i++){
+              console.log(response.data[i])
+            }
+          
             _this.items = response.data
           })
           .catch(function (error) {});
       }
+    },
+    mounted:function(){
+      this.onload();
     }
   }
 </script>
