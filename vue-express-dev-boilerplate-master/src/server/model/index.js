@@ -8,21 +8,29 @@ var sequelize = new Sequelize('demo', 'root', '123', {
         max: 5,
         min: 0,
         idle: 10000
+    },
+    define:{
+        charset: 'utf8',
+        underscored:true
     }
 })
 // 数据库模型名称及lujing
 const models =[
     {
-        "name": "article",
-        "path": "./article.js"
+        "name": "class",
+        "path": "./class.js"
     },
     {
-        "name": "goods",
-        "path": "./goods.js"
+        "name": "student",
+        "path": "./student.js"
     },
     {
-        "name": "userinfo",
-        "path": "./userinfo.js"
+        "name": "teacher",
+        "path": "./teacher.js"
+    },
+    {
+        "name": "user",
+        "path": "./user.js"
     }
 ]
 // 数据模型输出

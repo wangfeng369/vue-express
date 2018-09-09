@@ -6,8 +6,9 @@ var auto = new SequelizeAuto(
         directory: '../model', // prevents the program from writing to disk
         port: '3306',
         additional: {
-            timestamps: false
-            //...
+            timestamps: false,
+            underscored:true
+            
         }
     }
 )

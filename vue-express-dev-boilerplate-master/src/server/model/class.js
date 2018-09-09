@@ -1,23 +1,20 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('article', {
+	return sequelize.define('class', {
 		id: {
-			type: DataTypes.BIGINT,
+			type: DataTypes.INTEGER(11),
 			allowNull: false,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		title: {
+		name: {
 			type: DataTypes.STRING(255),
-			allowNull: false
-		},
-		content: {
-			type: DataTypes.TEXT,
 			allowNull: false
 		}
 	}, {
-		tableName: 'article',
-		timestamps: false
+		tableName: 'class',
+		timestamps: false,
+		underscored: true
 	});
 };

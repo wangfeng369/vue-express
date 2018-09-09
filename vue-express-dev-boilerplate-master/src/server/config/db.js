@@ -10,7 +10,8 @@ const sequelize = new Sequelize('demo','root','123',{
         idle:1000
     },
     define:{
-        charset: 'utf8'
+        charset: 'utf8',
+        underscored:true
     }
 })
 
