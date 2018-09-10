@@ -1,6 +1,6 @@
 <template>
   <div class="contaniner">
-    <div class="" style="width:500px;">
+    <div class="" style="width:100%;">
       <el-table :data="items" :default-sort = "{prop: 'id', order: 'ascending'}" style="width: 100%">
          <el-table-column type="index" label="序号" width="180">
         </el-table-column>
@@ -15,13 +15,15 @@
         </el-table-column>
       </el-table>
     </div>
-
-    <button @click="get()">获取数据</button>
+   <mu-button color="primary" @click="change()">获取数据</mu-button>
+  
   </div>
 
 </template>
 
 <script>
+import Vue from 'vue'
+
   export default {
     data() {
       return {
@@ -31,7 +33,7 @@
       }
     },
     methods: {
-      tz() {
+      tz: function() {
         this.$router.push({
           path: '/Hello'
         })
@@ -42,18 +44,25 @@
             'Content-Type': 'application/json'
           })
           .then(function (response) {
-
-            for(let i=0;i<response.data.lenght;i++){
-              console.log(response.data[i])
-            }
-          
-            _this.items = response.data
+            _this.items = response.data 
+            console.log(_this.items)
           })
           .catch(function (error) {});
-      }
+      },
+       change: function(){
+      console.log('1111')
+    }
     },
+   
     mounted:function(){
       this.onload();
+    
+    },
+    created:function(){
+     
+    },
+    updated:function(){
+     
     }
   }
 </script>
@@ -93,4 +102,5 @@
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
+
 </style>

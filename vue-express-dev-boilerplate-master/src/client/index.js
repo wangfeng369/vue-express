@@ -5,7 +5,8 @@ import store from './store/store'
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import MuseUI from 'muse-ui';
+import 'muse-ui/dist/muse-ui.css';
 
 
 Vue.config.debug = true
@@ -13,6 +14,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
 Vue.use(ElementUI)
+Vue.use(MuseUI)
 
 new Vue({
   el: '#app',

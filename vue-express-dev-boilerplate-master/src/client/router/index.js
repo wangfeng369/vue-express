@@ -8,10 +8,9 @@ import store from './../store/store'
 import Hello from './../components/Hello'
 import index from './../components/index'
 import login from './../components/login'
-
+import register from './../components/register'
 
 Vue.use(Router)
-
 
 var router = new Router({
   mode: 'hash',
@@ -20,6 +19,7 @@ var router = new Router({
     { name: 'index', path: '/index', component: index },
     { name: 'hello', path: '/hello', component: Hello },
     { name: 'login', path: '/login', component: login },
+    { name: 'register', path: '/register', component: register },
   ]
 })
 
