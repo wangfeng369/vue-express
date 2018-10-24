@@ -1,6 +1,6 @@
 <template>
   <div class="contaniner">
-    <div class="">
+    <div class="" style="width:100%;">
       <el-table :data="items" :default-sort = "{prop: 'id', order: 'ascending'}" style="width: 100%">
          <el-table-column  prop="index" label="序号" width="180">
         </el-table-column>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
   export default {
     data() {
       return {
@@ -82,10 +84,21 @@
             _this.totalCount = response.data.totalCount
           })
           .catch(function (error) {});
-      }
+      },
+       change: function(){
+      console.log('1111')
+    }
     },
+   
     mounted:function(){
       this.onload();
+    
+    },
+    created:function(){
+     
+    },
+    updated:function(){
+     
     }
   }
 </script>
@@ -125,4 +138,5 @@
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
+
 </style>

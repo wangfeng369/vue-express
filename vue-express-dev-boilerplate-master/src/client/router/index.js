@@ -11,7 +11,6 @@ const index = resolve => require(['@/client/components/index'], resolve);
 
 Vue.use(Router)
 
-
 var router = new Router({
   mode: 'hash',
   routes: [
