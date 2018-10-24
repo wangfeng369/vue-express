@@ -17,8 +17,15 @@ router.post('/userInfo', function (req, res, next) {
         association: Student.belongsTo(Class, {foreignKey:'classId'}),
         
        }];
-       Student.findAll({include:include}).then((result) => {
-            res.send(result)
+    let currentPage = req.body.currentPage
+    let pageSize  = req.body.pageSize
+    let totalCount = 0
+    let offset =(currentPage -1)* pageSize
+    console.log(currentPage)
+    console.log(offset)
+       Student.findAndCountAll({include:include,offset:offset,limit:pageSize}).then((result) => {
+            totalCount = result.count
+            res.send({'data':result.rows,'totalCount':totalCount})
        }).catch((err) => {
         console.error(err);
        });
