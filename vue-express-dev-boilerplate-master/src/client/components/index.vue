@@ -2,7 +2,7 @@
   <div class="contaniner">
     <div class="" style="width:100%;">
       <el-table :data="items" :default-sort = "{prop: 'id', order: 'ascending'}" style="width: 100%">
-         <el-table-column type="index" label="序号" width="180">
+         <el-table-column  prop="index" label="序号" width="180">
         </el-table-column>
         <el-table-column prop="name" label="姓名" width="180">
         </el-table-column>
@@ -15,10 +15,22 @@
         </el-table-column>
       </el-table>
     </div>
-   <mu-button color="primary" @click="change()">获取数据</mu-button>
-  
-  </div>
 
+    <router-view></router-view>
+    <div class="block">
+    <span class="demonstration">完整功能</span>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[1, 2, 3, 4]"
+      :page-size= pageSize
+      layout="total, sizes, prev, pager, next, jumper"
+      :total= totalCount>
+    </el-pagination>
+  </div>
+  </div>
+  
 </template>
 
 <script>
@@ -29,23 +41,47 @@ import Vue from 'vue'
       return {
         message: '您好全栈',
         items: [],
-       
+        currentPage:1,
+        totalCount:0,
+        pageSize:3
       }
     },
     methods: {
-      tz: function() {
+      handleSizeChange(val) {
+        let _this = this
+        _this.pageSize = val
+        
+        this.onload()
+      },
+      handleCurrentChange(val) {
+        let _this = this
+        _this.currentPage = val
+        this.onload()
+      },
+      tz() {
         this.$router.push({
           path: '/Hello'
         })
       },
       onload: function(){
         let _this = this
-        _this.$axios.post('/user/userInfo', {
+        _this.$axios.post(_this.apiUrl+'/user/userInfo', 
+          {
+            currentPage:_this.currentPage,
+            pageSize:_this.pageSize
+          },
+            {
             'Content-Type': 'application/json'
-          })
+          },
+        
+          )
           .then(function (response) {
-            _this.items = response.data 
-            console.log(_this.items)
+              response.data.data.forEach((items,index) => {
+              items.index = (index + 1)+(_this.currentPage -1)*_this.pageSize
+              return items
+            });
+            _this.items = response.data.data
+            _this.totalCount = response.data.totalCount
           })
           .catch(function (error) {});
       },

@@ -11,11 +11,8 @@ import 'muse-ui/dist/muse-ui.css';
 
 Vue.config.debug = true
 Vue.config.productionTip = false
-
-const debug = false;
-
-Vue.prototype.apiUrl = debug?'http://localhost:8888':'http://localhost:8888'
-
+const debug = true
+Vue.prototype.apiUrl = debug ? 'http://localhost:8888':'http://localhost:8888';
 Vue.prototype.$axios = axios
 Vue.use(ElementUI)
 Vue.use(MuseUI)

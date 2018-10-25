@@ -15,11 +15,12 @@
                 <el-button @click="resetForm('ruleForm2')">重置</el-button>
             </el-form-item>
         </el-form> -->
-        
+        <div class="">
             <input type="text" name="name" v-model="formData.username" value=""/>
             <input type="pwd" name="password" v-model="formData.pwd" value=""/>
-               <mu-button color="primary" @click="submit()">登录</mu-button>
-                <mu-button color="primary" @click="register()">注册</mu-button>
+            <input type="submit" value="提交" @click="submit"/>
+        </div>
+            <router-view></router-view>
     </div>
 
 </template>
@@ -64,6 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 body,html{
     padding: 0;
