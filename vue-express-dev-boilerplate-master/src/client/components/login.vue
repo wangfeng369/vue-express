@@ -18,105 +18,41 @@
         
             <input type="text" name="name" v-model="formData.username" value=""/>
             <input type="pwd" name="password" v-model="formData.pwd" value=""/>
-            <input type="submit" value="提交" @click="submit"/>
-        
+               <mu-button color="primary" @click="submit()">登录</mu-button>
+                <mu-button color="primary" @click="register()">注册</mu-button>
     </div>
 
 </template>
 <script>
     export default {
         data() {
-            // var checkAge = (rule, value, callback) => {
-            //     if (!value) {
-            //         return callback(new Error('年龄不能为空'));
-            //     }
-            //     setTimeout(() => {
-            //         if (!Number.isInteger(value)) {
-            //             callback(new Error('请输入数字值'));
-            //         } else {
-            //             if (value < 18) {
-            //                 callback(new Error('必须年满18岁'));
-            //             } else {
-            //                 callback();
-            //             }
-            //         }
-            //     }, 1000);
-            // };
-            // var validatePass = (rule, value, callback) => {
-            //     if (value === '') {
-            //         callback(new Error('请输入密码'));
-            //     } else {
-            //         if (this.ruleForm2.checkPass !== '') {
-            //             this.$refs.ruleForm2.validateField('checkPass');
-            //         }
-            //         callback();
-            //     }
-            // };
-            // var validatePass2 = (rule, value, callback) => {
-            //     if (value === '') {
-            //         callback(new Error('请再次输入密码'));
-            //     } else if (value !== this.ruleForm2.pass) {
-            //         callback(new Error('两次输入密码不一致!'));
-            //     } else {
-            //         callback();
-            //     }
-            // };
             return {
-                // ruleForm2: {
-                //     pass: '',
-                //     checkPass: '',
-                //     age: ''
-                // },
                 formData:{
                     username:'',
                     pwd:''
                 },
-                // rules2: {
-                //     pass: [{
-                //         validator: validatePass,
-                //         trigger: 'blur'
-                //     }],
-                //     checkPass: [{
-                //         validator: validatePass2,
-                //         trigger: 'blur'
-                //     }],
-                //     age: [{
-                //         validator: checkAge,
-                //         trigger: 'blur'
-                //     }]
-                // }
             };
         },
         methods: {
-            // submitForm(formName) {
-            //     this.$refs[formName].validate((valid) => {
-            //         if (valid) {
-            //             alert('submit!');
-            //         } else {
-            //             console.log('error submit!!');
-            //             return false;
-            //         }
-            //     });
-            // },
-            // resetForm(formName) {
-            //     this.$refs[formName].resetFields();
-            // }
             submit: function(){
                 let _this = this
                 let userName = _this.formData.username
                 let password = _this.formData.pwd
-                _this.$axios.post('/user/login',
+                _this.$axios.post(_this.apiUrl+'/user/login',
                     {userName:userName,password:password}, 
                     {'Content-Type': 'application/json'})
                     .then(function (response) {
-                        console.log(response)
-                        if(response.data.code==0){
-                            _this.$router.push({'path':'./index'})
-                        }else{
-                            alert('用户名或密码错误')
+                        if(!response.data.sucess){
+                            alert(response.data.info)
+                            return;
                         }
+                            _this.$router.push({'path':'./index'})
+                       
                      })
                     .catch(function (error) {});
+            },
+            register:function(){
+                this.$router.push({'path':'./register'})
             }
         }
         
