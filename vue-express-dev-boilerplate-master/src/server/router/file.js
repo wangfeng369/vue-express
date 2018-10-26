@@ -13,7 +13,7 @@ let createFolder = function(folder){
   }  
 };
 
-let uploadFolder = '../public/upload/';
+let uploadFolder = '../src/server/public/upload/';
 
 
 // 通过 filename 属性定制
