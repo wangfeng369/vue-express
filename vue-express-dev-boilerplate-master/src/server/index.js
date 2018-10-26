@@ -7,6 +7,7 @@ import webpack from 'webpack'
 import cors from 'cors'
 import indexRouter from './router/index'
 import userRouter from './router/user'
+import fileRouter from './router/file'
 // 引入history模块
 import history from 'connect-history-api-fallback'
 import fs from 'fs'
@@ -47,7 +48,7 @@ app.all('*', function (req, res, next) {
 
 app.use('/', indexRouter)
 app.use('/user', userRouter)
-
+app.use('/file',fileRouter)
 const compiler = webpack(config)
 //webpack 中间件
 app.use(webpackDevMiddleware(compiler, {
