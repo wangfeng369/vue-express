@@ -4,6 +4,9 @@ const router = express.Router()
 let Student = require('../model/').student
 let Class = require('../model/').class
 let User = require('../model/').user
+let multiparty = require('multiparty');
+let util = require('util');
+let fs = require('fs');
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
