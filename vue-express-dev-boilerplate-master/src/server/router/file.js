@@ -13,8 +13,8 @@ let createFolder = function(folder){
   }  
 };
 
-let uploadFolder = '../src/server/public/upload/';
-
+let uploadFolder = '../public/upload/';
+createFolder(uploadFolder);
 
 // 通过 filename 属性定制
 let storage = multer.diskStorage({
@@ -35,6 +35,11 @@ router.post('/file',upload.single('file'), function(req, res, next) {
     let file = req.file;
     console.log(file)
     res.send({ret_code: '0'});
+});
+
+router.get('/form', function(req, res, next){
+  var form = fs.readFileSync('./form.html', {encoding: 'utf8'});
+  res.send(form);
 });
 
 
