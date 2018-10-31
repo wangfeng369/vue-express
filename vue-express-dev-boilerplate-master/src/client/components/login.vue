@@ -47,7 +47,8 @@
                             alert(response.data.info)
                             return;
                         }
-                            _this.$router.push({'path':'./index'})
+                        sessionStorage.setItem('token',response.data.token);
+                        _this.$router.push({'path':'./index'})
                        
                      })
                     .catch(function (error) {});

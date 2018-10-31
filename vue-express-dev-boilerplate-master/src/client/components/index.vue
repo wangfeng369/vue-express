@@ -88,13 +88,12 @@
 			},
 			onload: function () {
 				let _this = this
+				let _token = sessionStorage.getItem('token')
+				console.log(_token)
 				_this.$axios.post(_this.apiUrl + '/user/userInfo', {
 							currentPage: _this.currentPage,
 							pageSize: _this.pageSize
-						}, {
-							'Content-Type': 'application/json'
-						},
-
+						}
 					)
 					.then(function (response) {
 						response.data.data.forEach((items, index) => {
