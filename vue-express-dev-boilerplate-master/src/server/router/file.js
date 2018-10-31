@@ -1,6 +1,5 @@
 import express from 'express'
 const router = express.Router();
-import Sequelize from 'sequelize'
 import fs from 'fs'
 import multer from 'multer'
 
@@ -13,8 +12,8 @@ let createFolder = function(folder){
   }  
 };
 
-let uploadFolder = '../public/upload/';
-createFolder(uploadFolder);
+let uploadFolder = './file';
+createFolder(uploadFolder)
 
 // 通过 filename 属性定制
 let storage = multer.diskStorage({
@@ -23,7 +22,7 @@ let storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
-        cb(null, file.fieldname);  
+        cb(null, file.originalname);  
     }
 });
 

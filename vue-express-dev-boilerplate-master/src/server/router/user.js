@@ -50,12 +50,36 @@ router.post('/login', function (req, res, next) {
         }
     }).then(data=>{
         if(data.userName==username&&data.password==pwd){
-            res.send({code:'0'})
+            res.send({sucess:'0'})
         }else{
-            res.send('用户名或密码错误')
+            res.send({'info':'用户名或密码错误'})
         }
     }).catch(error=>{
         res.send('用户名或密码错误')
+        console.log(error)
+    })
+})
+router.post('/register', function (req, res, next) {
+    console.log(req.body)
+    let username = req.body.userName
+    let pwd = req.body.password
+    let name = req.body.name
+    User.findOne({
+        where:{
+            userName:username
+        }
+    }).then(data=>{
+        if(data.userName==username){
+            res.send({'info':'用户名已注册'})
+        }
+    }).catch(error=>{
+        User.create({
+            userName:username,
+            password:pwd,
+            name:name
+        }).then(data=>{
+            res.send({sucess:'0'})
+        })
         console.log(error)
     })
 })
