@@ -14,7 +14,8 @@ import fs from 'fs'
 // 正式环境时，下面两个模块不需要引入
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-
+const jwt = require('jsonwebtoken')
+const tokenCommon = require('./public/token')
 import config from '../../build/webpack.dev.conf'
 const app = express()
 
@@ -25,7 +26,9 @@ app.use(history())
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(express.static(path.join(__dirname, 'public')))
 
 // app.use(express.static(path.resolve(__dirname, '../../dist')));
@@ -34,26 +37,49 @@ app.use(express.static(path.join(__dirname, 'public')))
 //     var html = fs.readFileSync(path.resolve(__dirname, '../../dist/index.html'), 'utf-8');
 //     res.send(html);
 // });
-app.use(cors()); 
+app.use(cors());
 //设置跨域访问
 app.all('*', function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
-	res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-	res.header("X-Powered-By", ' 3.2.1')
-	res.header("Content-Type", "application/json;charset=utf-8");
-	next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By", ' 3.2.1')
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
 });
 
-
+app.use(function (req, res, next) {
+  console.log(req.url)
+  console.log(req.url == '/user/login')
+  console.log(req.url != '/user/login' && req.url != '/user/register' && req.url != '/index.html' && req.url != '/app.js' && req.url != '/0.js' && req.url != '/1.js' && req.url != '/2.js' && req.url != '/__webpack_hmr')
+  if (req.url != '/user/login' && req.url != '/user/register' && req.url != '/index.html' && req.url != '/app.js' && req.url != '/1.js' && req.url != '/2.js' && req.url != '/0.js' && req.url != '/__webpack_hmr') {
+    let token = req.headers.token;
+    jwt.verify(token, tokenCommon.secret, function (err, decoded) {
+      if (err) {
+        res.send({
+          success: false,
+          message: 'token过期',
+          code: 1001
+        });
+      } else {
+        next();
+      }
+    })
+  } else {
+    next();
+  }
+});
 app.use('/', indexRouter)
 app.use('/user', userRouter)
-app.use('/file',fileRouter)
+
+app.use('/file', fileRouter)
 const compiler = webpack(config)
 //webpack 中间件
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
-  stats: { colors: true }
+  stats: {
+    colors: true
+  }
 }))
 
 app.use(webpackHotMiddleware(compiler))

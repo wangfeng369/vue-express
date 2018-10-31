@@ -17,6 +17,56 @@ Vue.prototype.$axios = axios
 Vue.use(ElementUI)
 // Vue.use(MuseUI)
 
+//添加请求拦截器
+axios.interceptors.request.use(
+  config =>{
+    //在发送请求之前做某事
+  let token = sessionStorage.getItem('token');
+  if(token){
+    config.headers.token = token
+  }
+
+  return config;
+},function(error){
+  //请求错误时做些事
+  return Promise.reject(error);
+});
+
+ axios.interceptors.response.use(
+      response => {/*在这里可以设置请求成功的一些设置*/
+        console.log(response.data)
+        if(response.data.code == 1001){
+          Vue.prototype.$message(
+            {
+              message: '登录信息过期，请重新登录',
+              duration:2000,
+              type:'error'
+            }
+           );
+          router.replace({
+            path: '/login'
+        })
+        }
+        return response;
+      },
+      error => {/*在这里设置token过期的跳转*/
+        if (error.response) {
+          if(!error.response.data.success){
+            Vue.prototype.$message(
+              {
+                message: '登录信息过期，请重新登录',
+                duration:2000,
+                type:'error'
+              }
+             );
+            router.replace({
+              path: '/login'
+          })    
+          }
+        }
+      });
+
+
 new Vue({
   el: '#app',
   router: router,

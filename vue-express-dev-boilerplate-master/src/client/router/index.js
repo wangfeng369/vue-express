@@ -26,13 +26,13 @@ var router = new Router({
           path: '/index',
           component: index,
         },
-        {
-          path: '/login',
-          component: login,
-        }
       ]
-  
-  },
+    },
+    {
+      name:'login',
+      path: '/login',
+      component: login,
+    }
   ]
 })
 
