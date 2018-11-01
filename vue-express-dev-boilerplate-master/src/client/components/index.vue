@@ -60,13 +60,13 @@
 						</swiper-slide>
 						<div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
-
+					<el-button @click="changeType()">{{msg}}</el-button>
 				</div>
 			</el-scrollbar>
 
 		</div>
 
-		<router-view></router-view>
+		
 	</div>
 
 </template>
@@ -77,7 +77,14 @@
 	export default {
 		components:{
 			swiper,
-			swiperSlide
+			swiperSlide,
+			hasLogin:true
+		},
+		props:{
+			msg:{
+				type: String,
+				require:true
+			}
 		},
 		data() {
 			return {
@@ -100,7 +107,13 @@
 			}
 		},
 		methods: {
-		
+			changeType:function(){
+				let token = sessionStorage.getItem('token');
+				if(token!=null&&token!=undefined){
+					this.hasLogin = false
+					this.$emit('change','213')
+				}
+			}
 		},
 		computed: {
 			swiper() {
@@ -115,7 +128,10 @@
 		},
 		updated: function () {
 
-		}
+		},
+		beforeCreate:function(){
+
+			}
 		}
 </script>
 

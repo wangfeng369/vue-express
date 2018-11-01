@@ -14,7 +14,7 @@ Vue.use(Router)
 var router = new Router({
   mode: 'hash',
   routes: [
-    { name:'index',
+    { name:'login',
       path:'/',
       redirect:'/login'
     },{

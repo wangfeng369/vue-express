@@ -65,7 +65,8 @@ router.post('/login', function (req, res, next) {
         if (data.userName == username && data.password == pwd) {
             res.send({
                 sucess: '0',
-                token: token
+                token: token,
+                name: data.name
             })
         } else {
             res.send({

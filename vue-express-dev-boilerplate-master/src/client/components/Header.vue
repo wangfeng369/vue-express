@@ -18,20 +18,16 @@
         <li>
           <a href="javascript:void(0)" class="nav-link index" @click="goIndex">首页</a>
         </li>
-        <li>
+        <li v-if="hasNoLogin">
           <a href="javascript:void(0)" class="nav-link login" @click="goLogin">登录/注册</a>
-         
         </li>
-        <li class="nav-dropdown-container learn">
-          <a class="nav-link">学习</a><span class="arrow"></span>
+        <li class="nav-dropdown-container learn" v-else>
+          <a class="nav-link account_name">{{username}}</a><span class="arrow"></span>
           <ul class="nav-dropdown">
             <li>
               <ul>
-                <li><a href="/v2/guide/" class="nav-link">教程</a></li>
-                <li><a href="/v2/api/" class="nav-link">API</a></li>
-                <li><a href="/v2/style-guide/" class="nav-link">风格指南</a></li>
-                <li><a href="/v2/examples/" class="nav-link">示例</a></li>
-                <li><a href="/v2/cookbook/" class="nav-link">Cookbook</a></li>
+                <li><a href="javascript:void(0)" class="nav-link">个人中心</a></li>
+                <li><a href="javascript:void(0)" class="nav-link">注销</a></li>
               </ul>
             </li>
           </ul>
@@ -64,7 +60,9 @@
       </div>
     </div>
     <div class="">
+      <index :msg="msg" @change="getLogintype()"></index>
       <router-view></router-view>
+
     </div>
 
   </div>
@@ -72,13 +70,21 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import * as common from '../static/js/common.js'
+  import index from './index.vue'
   // const common = require('../static/js/common.js')
   export default {
     data() {
       return {
-        tab: 0
+        tab: 0,
+        hasNoLogin:true,
+        msg: '这是父组件传过来的',
+        username:''
       }
+    },
+    components:{
+      index
     },
     methods: {
       initMobileMenu: function () {
@@ -100,10 +106,29 @@
       },
       goIndex : function(){
          this.$router.push({'path':'./index'})
+      },
+       getLogintype:function(msg){
+        let that = this
+        console.log(msg)
+      },
+      changeHasLogin:function(){
+        let token = sessionStorage.getItem('token')
+        let username = sessionStorage.getItem('username')
+        if(token!=null||token!=undefined){
+          this.hasNoLogin = false
+          this.username = username
+        }
       }
+    },
+    watch:{
+      
+    },
+    beforeCreate:function(){
+      
     },
     mounted: function () {
       this.initMobileMenu()
+      this.changeHasLogin();
     }
   }
 </script>
