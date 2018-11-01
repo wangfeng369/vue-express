@@ -3,8 +3,8 @@
 		<div class="mian-box">
 			<el-scrollbar wrap-class="list" view-class="view-box" :native="false">
 				<div class="wraper">
-					<swiper class="carousel-inner ">
-						<swiper-slide class="item" :options="swiperOption" ref="mySwiper">
+					<swiper class="carousel-inner " :options="swiperOption"  ref="mySwiper">
+						<swiper-slide class="item" >
 							<div class="banner" data-banner-name="小说连载">
 								<a target="_blank" href="https://www.jianshu.com/p/c7d9037eba2f?utm_medium=index-banner&amp;utm_source=desktop"><img
 									 src="//upload.jianshu.io/admin_banners/web_images/4529/d8d780d8dd4a32485655815c2cb4e367b61cb15c.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
@@ -59,8 +59,6 @@
 							</div>
 						</swiper-slide>
 						<div class="swiper-pagination" slot="pagination"></div>
-						 <div class="swiper-button-next"></div>
-    					<div class="swiper-button-prev"></div>
 					</swiper>
 
 				</div>
@@ -77,31 +75,27 @@
 	import Vue from 'vue'
 	import {swiper,swiperSlide} from 'vue-awesome-swiper'
 	export default {
+		components:{
+			swiper,
+			swiperSlide
+		},
 		data() {
 			return {
-				// swiper,
-				// swiperSlide,
-				  swiperOption: {
-						// 所有配置均为可选（同Swiper配置）
-						initialSlide: 0,
-						pagination:'.swiper-pagination',
-						// pagination: {
-						//  el: '.swiper-pagination'
-						// },
-						loop: true,
-						speed: 400,
+				swiperOption: {
 						direction: 'horizontal',
-						paginationClickable: true,
-						mousewheelControl: true,
-						autoplay: 1000,
-						//autoplay: true,
-						autoplayDisableOnInteraction: false,
-						observer: true,
-						observeParents: true,
-						debugger: true,
-						onTransitionStart (swiper) {
-							console.log(swiper)
-						}
+				autoplay: {
+					disableOnInteraction: false,
+				},
+				 navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+				loop: true,
+				// 如果需要分页器
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
         }
 			}
 		},
@@ -126,6 +120,7 @@
 </script>
 
 <style scoped>
+
 	body {
 		background: #fff;
 	}
