@@ -1,30 +1,120 @@
 <template>
 	<div class="contaniner">
-		<div class="wraper">
-		
-			
-			<router-view></router-view>
-		
+		<div class="mian-box">
+			<el-scrollbar wrap-class="list" view-class="view-box" :native="false">
+				<div class="wraper">
+					<swiper class="carousel-inner ">
+						<swiper-slide class="item" :options="swiperOption" ref="mySwiper">
+							<div class="banner" data-banner-name="小说连载">
+								<a target="_blank" href="https://www.jianshu.com/p/c7d9037eba2f?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4529/d8d780d8dd4a32485655815c2cb4e367b61cb15c.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="音频连载">
+								<a target="_blank" href="https://www.jianshu.com/p/ea92638c0833?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4524/65fb6e8f81ccbbc7dacf5c380e0366a003ba7881.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="简书钻">
+								<a target="_blank" href="https://www.jianshu.com/p/0359f7d253a2?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4533/fc384bd68d23df5114c41c3ef12ba12dd000e244.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="行距杯征文大赛">
+								<a target="_blank" href="https://www.jianshu.com/mobile/campaign/common/hangju?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4486/240ebd0212e4fce11577abbe3169c9345637ee58.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="简书周爆">
+								<a target="_blank" href="https://www.jianshu.com/p/b5141cda9fd7?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4514/a9212731b77ad524cb832c35d314348ec0b66235.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="新书推广 | 当你想要学民乐web">
+								<a target="_blank" href="http://product.dangdang.com/25574123.html?unionid=p-107512535m"><img src="//upload.jianshu.io/admin_banners/web_images/4539/814816838070065013af51fac80e6a03e453a660.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="众乐纪填词征集">
+								<a target="_blank" href="https://www.jianshu.com/p/910215a8ae5f?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4528/cfbfae092b2d7f29a4bc52e906dfd89a5e8ac16d.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="新书推广 | 共情">
+								<a target="_blank" href="http://product.dangdang.com/25546724.html"><img src="//upload.jianshu.io/admin_banners/web_images/4537/e4fc8843fabbf17e6f5660eea8ce0661b00b3089.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<div class="swiper-pagination" slot="pagination"></div>
+						 <div class="swiper-button-next"></div>
+    					<div class="swiper-button-prev"></div>
+					</swiper>
+
+				</div>
+			</el-scrollbar>
+
 		</div>
+
+		<router-view></router-view>
 	</div>
 
 </template>
 
 <script>
 	import Vue from 'vue'
-
+	import {swiper,swiperSlide} from 'vue-awesome-swiper'
 	export default {
 		data() {
 			return {
+				// swiper,
+				// swiperSlide,
+				  swiperOption: {
+						// 所有配置均为可选（同Swiper配置）
+						initialSlide: 0,
+						pagination:'.swiper-pagination',
+						// pagination: {
+						//  el: '.swiper-pagination'
+						// },
+						loop: true,
+						speed: 400,
+						direction: 'horizontal',
+						paginationClickable: true,
+						mousewheelControl: true,
+						autoplay: 1000,
+						//autoplay: true,
+						autoplayDisableOnInteraction: false,
+						observer: true,
+						observeParents: true,
+						debugger: true,
+						onTransitionStart (swiper) {
+							console.log(swiper)
+						}
+        }
 			}
 		},
 		methods: {
-			
 		
 		},
-
+		computed: {
+			swiper() {
+				return this.$refs.mySwiper.swiper
+			}
+		},
 		mounted: function () {
-
+			console.log(swiper)
 		},
 		created: function () {
 
@@ -32,49 +122,36 @@
 		updated: function () {
 
 		}
-	}
+		}
 </script>
 
 <style scoped>
-	body{
+	body {
 		background: #fff;
 	}
-	.wraper{
+
+	.wraper {
 		max-width: 800px;
 		margin: auto;
+		height: 100vh;
+
 	}
-	.el-header,
-	.el-footer {
-		background-color: #B3C0D1;
-		color: #333;
-		text-align: center;
-		line-height: 60px;
+	.carousel-inner{
+		width: 625px;
+		margin-left: 0;
+	}
+	.list {
+		overflow-x: hidden;
+		height: calc(100vh - 80px);
 	}
 
-	.el-aside {
-		background-color: #D3DCE6;
-		color: #333;
-		text-align: center;
-		line-height: 200px;
-	}
+	.banner {
+		width: 625px;
 
-	.el-main {
-		background-color: #E9EEF3;
-		color: #333;
-		text-align: center;
-		line-height: 160px;
 	}
-
-	body>.el-container {
-		margin-bottom: 40px;
-	}
-
-	.el-container:nth-child(5) .el-aside,
-	.el-container:nth-child(6) .el-aside {
-		line-height: 260px;
-	}
-
-	.el-container:nth-child(7) .el-aside {
-		line-height: 320px;
+	.banner a img {
+		width: 100%;
+		object-fit: cover;
+		height: 250px;
 	}
 </style>
