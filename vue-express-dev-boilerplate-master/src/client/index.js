@@ -5,6 +5,7 @@ import store from './store/store'
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './static/css/reset.css'
 // import MuseUI from 'muse-ui';
 // import 'muse-ui/dist/muse-ui.css';
 

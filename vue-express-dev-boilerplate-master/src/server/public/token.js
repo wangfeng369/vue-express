@@ -1,5 +1,5 @@
 const secret = '123456'
-const tokenExp = 20
+const tokenExp = 24*60*60
 
 
 
