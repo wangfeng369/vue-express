@@ -36,5 +36,10 @@ router.post('/file',upload.single('file'), function(req, res, next) {
     res.send({ret_code: '0'});
 });
 
+router.get('/form', function(req, res, next){
+  var form = fs.readFileSync('./form.html', {encoding: 'utf8'});
+  res.send(form);
+});
+
 
 module.exports = router;
