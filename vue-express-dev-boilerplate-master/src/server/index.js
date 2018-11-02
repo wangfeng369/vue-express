@@ -49,17 +49,17 @@ app.all('*', function (req, res, next) {
 });
 
 app.use(function (req, res, next) {
-  console.log(req.url)
-  console.log(req.url == '/user/login')
-  console.log(req.url != '/user/login' && req.url != '/user/register' && req.url != '/index.html' && req.url != '/app.js' && req.url != '/0.js' && req.url != '/1.js' && req.url != '/2.js' && req.url != '/__webpack_hmr')
-  if (req.url != '/user/login' && req.url != '/user/register' && req.url != '/index.html' && req.url != '/app.js' && req.url != '/1.js' && req.url != '/2.js' && req.url != '/0.js' && req.url != '/__webpack_hmr') {
+  let url = req.url
+  let urlA = url.split('.')
+  if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr') {
     let token = req.headers.token;
     jwt.verify(token, tokenCommon.secret, function (err, decoded) {
       if (err) {
         res.send({
           success: false,
           message: 'token过期',
-          code: 1001
+          code: 1001,
+          err:err
         });
       } else {
         next();

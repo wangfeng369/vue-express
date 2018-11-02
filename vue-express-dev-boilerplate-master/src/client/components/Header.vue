@@ -7,7 +7,7 @@
     <div id="header">
       <a id="logo" href="/">
         <img src="../static/images/timg.gif">
-        <span class="siyuan">blog</span>
+        <span class="siyuan">W-blog</span>
       </a>
       <ul id="nav">
         <li>
@@ -60,8 +60,7 @@
       </div>
     </div>
     <div class="">
-      <index :msg="msg" @change="getLogintype()"></index>
-      <router-view></router-view>
+    <index :msg="msg" @change="getLogintype"></index>
 
     </div>
 
@@ -107,9 +106,9 @@
       goIndex : function(){
          this.$router.push({'path':'./index'})
       },
-       getLogintype:function(msg){
+       getLogintype:function(hasLogin){
         let that = this
-        console.log(msg)
+        console.log(hasLogin)
       },
       changeHasLogin:function(){
         let token = sessionStorage.getItem('token')
@@ -136,7 +135,7 @@
 <style scoped>
   @import url('../static/css/index.css');
   @import url('../static/css/search.css');
-  @import url(//at.alicdn.com/t/font_899268_lwy8gbrhmn.css);
+  @import url(//at.alicdn.com/t/font_899268_49dl6h29dg9.css);
   .siyuan{
     font-family: fantasy;
   }

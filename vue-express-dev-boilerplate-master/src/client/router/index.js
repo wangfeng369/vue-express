@@ -8,15 +8,18 @@ import store from './../store/store'
 const header = resolve => require(['@/client/components/Header'], resolve);
 const login = resolve => require(['@/client/components/login'], resolve);
 const index = resolve => require(['@/client/components/index'], resolve);
+const register = resolve => require(['@/client/components/register'], resolve);
+
+
 
 Vue.use(Router)
 
 var router = new Router({
   mode: 'hash',
   routes: [
-    { name:'login',
+    { name:'index',
       path:'/',
-      redirect:'/login'
+      redirect:'/login',
     },{
       name: 'index', 
       path: '/header', 

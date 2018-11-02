@@ -192,7 +192,6 @@ body {
   color: #34495e;
   background-color: #fff;
   margin: 0;
-  background: #f4f4f4;
   height: 100vh;
   overflow: hidden;
 }
@@ -456,6 +455,8 @@ sup.beta.beta {
   padding: 10px 60px;
   position: relative;
   z-index: 100;
+  border-bottom: 1px solid #e1e1e1;
+  box-shadow: 1px 1px 17px 1px #909090;
 }
 body.docs #header {
   position: fixed;
@@ -697,6 +698,9 @@ body.docs #nav {
   .sidebar.open {
     -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
+  }
+  .wraper{
+    height:100vh !important;
   }
 }
 @media print {
