@@ -11,7 +11,6 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken')
 const secret = tokenScrete.secret
 /* GET home page. */
-
 router.get('/', function (req, res, next) {
     //   res.render('index', { title: 'Express' });
     res.send('11111');

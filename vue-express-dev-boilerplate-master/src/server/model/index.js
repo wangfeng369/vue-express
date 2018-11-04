@@ -31,6 +31,10 @@ const models =[
     {
         "name": "user",
         "path": "./user.js"
+    },
+    {
+        "name":"article",
+        "path":"./article.js"
     }
 ]
 // 数据模型输出

@@ -188,6 +188,7 @@
 		swiper,
 		swiperSlide
 	} from 'vue-awesome-swiper'
+import { error } from 'util';
 	export default {
 		components: {
 			swiper,
@@ -218,56 +219,21 @@
 						clickable: true,
 					},
 				},
-				items: [{
-						id: '1',
-						title: '独占一块大陆的澳大利亚，为何不能成为中美一样的大国？',
-						content: '纵观世界，没有哪个国家像澳大利亚一样，几乎独占整块大陆。不仅如此，澳大利亚四面环海，周边都是一些弱小的岛国，没有一个国家能够威胁到他，地缘环境相...',
-						author: '庐州冢虎',
-						comment: '5',
-						like: '999',
-						isLike: 0
-					},
-					{
-						id: '2',
-						title: '独占一块大陆的澳大利亚，为何不能成为中美一样的大国？',
-						content: '纵观世界，没有哪个国家像澳大利亚一样，几乎独占整块大陆。不仅如此，澳大利亚四面环海，周边都是一些弱小的岛国，没有一个国家能够威胁到他，地缘环境相...',
-						author: '庐州冢虎',
-						comment: '5',
-						like: '999',
-						isLike: 1
-					},
-					{
-						id: '3',
-						title: '独占一块大陆的澳大利亚，为何不能成为中美一样的大国？',
-						content: '纵观世界，没有哪个国家像澳大利亚一样，几乎独占整块大陆。不仅如此，澳大利亚四面环海，周边都是一些弱小的岛国，没有一个国家能够威胁到他，地缘环境相...',
-						author: '庐州冢虎',
-						comment: '5',
-						like: '999',
-						isLike: 1
-					},
-					{
-						id: '4',
-						title: '独占一块大陆的澳大利亚，为何不能成为中美一样的大国？',
-						content: '纵观世界，没有哪个国家像澳大利亚一样，几乎独占整块大陆。不仅如此，澳大利亚四面环海，周边都是一些弱小的岛国，没有一个国家能够威胁到他，地缘环境相...',
-						author: '庐州冢虎',
-						comment: '5',
-						like: '999',
-						isLike: 1
-					},
-					{
-						id: '5',
-						title: '独占一块大陆的澳大利亚，为何不能成为中美一样的大国？',
-						content: '纵观世界，没有哪个国家像澳大利亚一样，几乎独占整块大陆。不仅如此，澳大利亚四面环海，周边都是一些弱小的岛国，没有一个国家能够威胁到他，地缘环境相...',
-						author: '庐州冢虎',
-						comment: '5',
-						like: '999',
-						isLike: 1
-					}
-				],
-
+				items:[]
 			}
 		},
 		methods: {
+			onload: function(){
+				let _this = this
+				_this.$axios.post(_this.apiUrl+'/article/article',{
+					currentPage:1,
+					pageSize:10
+				}).then(data=>{
+					console.log(data)
+				}).catch(error=>{
+
+				})
+			},
 			changeType: function () {
 				let token = sessionStorage.getItem('token');
 				if (token != null && token != undefined) {
@@ -292,6 +258,7 @@
 		},
 		mounted: function () {
 			console.log(swiper)
+			this.onload();
 		},
 		created: function () {
 

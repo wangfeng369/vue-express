@@ -29,30 +29,29 @@ superagent.get(cnodeUrl)
                     let $ = cheerio.load(res.text);
                     let add = href;
                     //把数据存储到一个对象里
-                    mainJson.push({
-                        title: $('.article>h1').text().trim(),
+                    let spad = {
+                        title: $('.article>h1').text(),
                         href: add,
                         avatar: $('.avatar>img').attr('src'),
-                        author: $('.info>name>a').text().trim(),
-                        time: $('.publish-time').text().trim(),
-                        wordage: $('.wordage').text().trim(),
-                        view: $('meta>.views-count').text().trim(),
-                        comment: $('.meta>.comments-count').text().trim(),
-                        like: $('.meta>.likes-count').text().trim(),
-                    })   
-
+                        author: $('.article .author .info .name a').text(),
+                        time: $('.publish-time').text(),
+                        wordage: $('.wordage').text(),
+                        view: $('meta>.views-count').text(),
+                        comment: $('.meta>.comments-count').text(),
+                        like: $('.meta>.likes-count').text(),
+                    }
+                    fs.appendFile('./data/result1.json', JSON.stringify(spad), 'utf-8', function (err) {
+                        if (err) {
+                            console.log(err)
+                            throw new Error("appendFile failed...")
+            
+                        };
+                        console.log("数据写入success...");
+                    }); 
                 
                 })
         });
-        fs.appendFile('./data/result1.json', JSON.stringify(mainJson), 'utf-8', function (err) {
-            if (err) {
-                console.log(err)
-                throw new Error("appendFile failed...")
-
-            };
-            console.log("数据写入success...");
-
-        }); 
+      
       
      
         const ep = new eventproxy();
