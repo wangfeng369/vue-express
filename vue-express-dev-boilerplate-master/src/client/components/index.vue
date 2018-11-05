@@ -64,20 +64,19 @@
 						<div id="listContainer">
 							<ul class="note-list" infinite-scroll-url="/">
 								<li id="note-33195705" data-note-id="33195705" class="have-img" v-for="(item,index) in items" :key="item.id">
-									<a class="wrap-img" href="/p/9aa79f0cffc7" target="_blank">
-										<img class="  img-blur-done" src="//upload-images.jianshu.io/upload_images/12631447-634db5602cdcc946.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240"
+									<a class="wrap-img"  target="_blank">
+										<img class="  img-blur-done" :src="item.avatar"
 										 alt="120">
 									</a>
 									<div class="content">
-										<a class="title" target="_blank" href="/p/9aa79f0cffc7">{{item.title}}</a>
-										<p class="abstract">
-											{{item.content}}
+										<a class="title" target="_blank" :href="item.articleHeft">{{item.title}}</a>
+										<p class="abstract" v-html="item.content">
 										</p>
 										<div class="meta">
 											<a class="nickname" target="_blank" href="/u/b15b81aa0573">{{item.author}}</a>
 											<a target="_blank" href="/p/9aa79f0cffc7#comments">
-												<i class="iconfont icon-message"></i> {{item.comment}}
-											</a> <span><i :class="['iconfont','icon-heart','animated',item.isLike ==0 ? 'icon-heart-on heartZoom':'']"
+												<i class="iconfont icon-message"></i> {{item.comments}}
+											</a> <span><i :class="['iconfont','icon-heart','animated',item.isLike ==1 ? 'icon-heart-on heartZoom':'']"
 												 :data-index=item.isLike @click="like(index,item.isLike)"></i> {{item.like}}</span>
 										</div>
 									</div>
@@ -229,7 +228,7 @@ import { error } from 'util';
 					currentPage:1,
 					pageSize:10
 				}).then(data=>{
-					console.log(data)
+					_this.items = data.data.data
 				}).catch(error=>{
 
 				})
