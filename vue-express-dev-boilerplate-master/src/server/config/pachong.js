@@ -8,6 +8,7 @@ const cnodeUrl = 'https://www.jianshu.com/';
 let mainJson = []
 let obj = {}
 let stad ={}
+const ep = new eventproxy();
 superagent.get(cnodeUrl)
     .set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36")
     .end(function (err, res) {
@@ -20,80 +21,55 @@ superagent.get(cnodeUrl)
             const $element = $(element);
             const href = url.resolve(cnodeUrl, $element.attr('href'));
             topicUrls.push(href);
-            superagent.get(href)
-            .set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36")
-                .end(function (err, res) {
-                    if (err) {
-                        return console.error(err);
-                    }
-                    let $ = cheerio.load(res.text);
-                    let add = href;
-                    //把数据存储到一个对象里
-                    let spad = {
-                        title: $('.article>h1').text(),
-                        href: add,
-                        avatar: $('.avatar>img').attr('src'),
-                        author: $('.article .author .info .name a').text(),
-                        time: $('.publish-time').text(),
-                        wordage: $('.wordage').text(),
-                        view: $('meta>.views-count').text(),
-                        comment: $('.meta>.comments-count').text(),
-                        like: $('.meta>.likes-count').text(),
-                    }
-                    fs.appendFile('./data/result1.json', JSON.stringify(spad), 'utf-8', function (err) {
-                        if (err) {
-                            console.log(err)
-                            throw new Error("appendFile failed...")
-            
-                        };
-                        console.log("数据写入success...");
-                    }); 
-                
-                })
         });
-      
-      
-     
-        const ep = new eventproxy();
+        topicUrls.forEach(function (topicUrl) {
+            superagent.get(topicUrl)
+            .set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36")
+            .end(function (err, res) {
+                ep.emit('topic_html', [topicUrl, res.text]);
+              });
+          });     
+        ep.after('topic_html', topicUrls.length, function (topics) {
+        topics = topics.map(function (topicPair,index) {
+            const topicUrl = topicPair[0];
+            const topicHtml = topicPair[1];
+            const $ = cheerio.load(topicHtml);
+            let text = ''
+            $('.show-content-free p').each(function(){
+                text += $(this).text()+'<br/>';
+            })
+            console.log($('.note-bottom div').length)
+            let ids = $('.note-bottom div').eq(1).attr('data-note-id')
+            let view = $('.info .meta span').eq(2).text();
+           
+            let comments = $('.info .meta span').eq(3).text();
+            let like = $('.info .meta span').eq(4).text();
+            console.log(ids)
+            return ({
+                id:ids,
+                title: $('.article .title').text(),
+                href: topicUrl,
+                avatar: $('.author .avatar img').attr('src'),
+                wordage:$('.meta .wordage').text(),
+                publishTime:$('.meta .publish-time').text(),
+                content:text,
+                view: view,
+                author: $('.author .info .name a').text(),
+                comments: comments,
+                like: like,
+            });
+        });
 
-        // ep.after('p_html', topicUrls.length, function (topics) {
-        // topics = topics.map(function (topicPair,index) {
-        //     console.log(topicPair)
-        //     const topicUrl = topicPair[0];
-        //     const topicHtml = topicPair[1];
-        //     const $ = cheerio.load(topicHtml);
-        //     return ({
-        //     title: $('.article>h1').text().trim(),
-        //     href: topicUrl,
-        //     avatar:$('.avatar>img').attr('src'),
-        //     author:$('.info>name>a').text().trim(),
-        //     time:$('.publish-time').text().trim(),
-        //     wordage:$('.wordage').text().trim(),
-        //     view:$('.views-count').text().trim(),
-        //     comment:$('.comments-count').text().trim(),
-        //     like:$('.likes-count').text().trim(),
-        //     });
-        // });
+        console.log('final:');
+        fs.appendFile('./data/result1.json', JSON.stringify(topics) ,'utf-8', function (err) {
+            if(err) {
+                console.log(err)
+                throw new Error("appendFile failed...")
 
-        // console.log('final:');
-        // console.log(topics);
-        // fs.appendFile('./data/result1.json', JSON.stringify(topics) ,'utf-8', function (err) {
-        //     if(err) {
-        //         console.log(err)
-        //         throw new Error("appendFile failed...")
+            };
+            console.log("数据写入success...");
 
-        //     };
-        //     console.log("数据写入success...");
-
-        // });
-        // })
-        // topicUrls.forEach(function (topicUrl) {
-        //     superagent.get(topicUrl)
-        //         .end(function (err, res) {
-        //             console.log('fetch ' + topicUrl + ' successful');
-        //             ep.emit('topic_html', [topicUrl, res.text]);
-
-        //         });
-        // });
-
+        });
+        })
+        
     });
