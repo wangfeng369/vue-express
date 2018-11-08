@@ -30,7 +30,7 @@ superagent.get(cnodeUrl)
               });
           });     
         ep.after('topic_html', topicUrls.length, function (topics) {
-        topics = topics.map(function (topicPair,index) {
+        topics = topics.map((topicPair,index)=>{
             const topicUrl = topicPair[0];
             const topicHtml = topicPair[1];
             const $ = cheerio.load(topicHtml);
@@ -38,15 +38,16 @@ superagent.get(cnodeUrl)
             $('.show-content-free p').each(function(){
                 text += $(this).text()+'<br/>';
             })
-            console.log($('.note-bottom div').length)
             let ids = $('.note-bottom div').eq(1).attr('data-note-id')
-            let view = $('.info .meta span').eq(2).text();
-           
-            let comments = $('.info .meta span').eq(3).text();
-            let like = $('.info .meta span').eq(4).text();
-            console.log(ids)
+            let html = $('script[type="application/json"]').html();
+            let newJson = JSON.parse(html)
+            let view = newJson.note.views_count
+            let comments = newJson.note.comments_count
+            let like = newJson.note.likes_count
+            let slug =  newJson.note.slug
             return ({
                 id:ids,
+                slug:slug,
                 title: $('.article .title').text(),
                 href: topicUrl,
                 avatar: $('.author .avatar img').attr('src'),

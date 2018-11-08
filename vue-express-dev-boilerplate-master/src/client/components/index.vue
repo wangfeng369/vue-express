@@ -1,7 +1,6 @@
 <template>
 	<div class="contaniner">
 		<div class="mian-box">
-			<el-scrollbar wrap-class="list" view-class="view-box" :native="false">
 				<div class="wraper">
 					<div class="left-warp">
 						<swiper class="carousel-inner " :options="swiperOption" ref="mySwiper">
@@ -65,8 +64,7 @@
 							<ul class="note-list" infinite-scroll-url="/">
 								<li id="note-33195705" data-note-id="33195705" class="have-img" v-for="(item,index) in items" :key="item.id">
 									<a class="wrap-img"  target="_blank">
-										<img class="  img-blur-done" :src="item.avatar"
-										 alt="120">
+										<img class="  img-blur-done" v-lazy="item.avatar" alt="120">
 									</a>
 									<div class="content">
 										<a class="title" target="_blank" :href="item.articleHeft">{{item.title}}</a>
@@ -166,13 +164,12 @@
 											写了164.1k字 · 1.2k喜欢
 										</p>
 									</li>
-								</ul> <a href="/recommendations/users?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="find-more">
-									查看全部<i class="iconfont ic-link"></i></a>
+								</ul> 
 							</div>
 						</div>
 					</div>
 				</div>
-			</el-scrollbar>
+			
 
 		</div>
 
@@ -275,13 +272,16 @@ import { error } from 'util';
 	body {
 		background: #fff;
 	}
-
+	.contaniner{
+		overflow: auto;
+		height: calc(100vh - 61px);
+	}
 	.wraper {
 		max-width: 960px;
 		margin: auto;
-		height: calc(100vh - 61px);
 		display: flex;
 		margin-top: 30px;
+	
 	}
 
 	.carousel-inner {
