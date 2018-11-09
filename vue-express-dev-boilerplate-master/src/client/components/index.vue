@@ -1,179 +1,179 @@
 <template>
 	<div class="contaniner">
 		<div class="mian-box">
-				<div class="wraper">
-					<div class="left-warp">
-						<swiper class="carousel-inner " :options="swiperOption" ref="mySwiper">
-							<swiper-slide class="item">
-								<div class="banner" data-banner-name="小说连载">
-									<a target="_blank" href="https://www.jianshu.com/p/c7d9037eba2f?utm_medium=index-banner&amp;utm_source=desktop"><img
-										 src="//upload.jianshu.io/admin_banners/web_images/4529/d8d780d8dd4a32485655815c2cb4e367b61cb15c.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<swiper-slide class="item ">
-								<div class="banner" data-banner-name="音频连载">
-									<a target="_blank" href="https://www.jianshu.com/p/ea92638c0833?utm_medium=index-banner&amp;utm_source=desktop"><img
-										 src="//upload.jianshu.io/admin_banners/web_images/4524/65fb6e8f81ccbbc7dacf5c380e0366a003ba7881.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<swiper-slide class="item ">
-								<div class="banner" data-banner-name="简书钻">
-									<a target="_blank" href="https://www.jianshu.com/p/0359f7d253a2?utm_medium=index-banner&amp;utm_source=desktop"><img
-										 src="//upload.jianshu.io/admin_banners/web_images/4533/fc384bd68d23df5114c41c3ef12ba12dd000e244.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<swiper-slide class="item ">
-								<div class="banner" data-banner-name="行距杯征文大赛">
-									<a target="_blank" href="https://www.jianshu.com/mobile/campaign/common/hangju?utm_medium=index-banner&amp;utm_source=desktop"><img
-										 src="//upload.jianshu.io/admin_banners/web_images/4486/240ebd0212e4fce11577abbe3169c9345637ee58.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<swiper-slide class="item ">
-								<div class="banner" data-banner-name="简书周爆">
-									<a target="_blank" href="https://www.jianshu.com/p/b5141cda9fd7?utm_medium=index-banner&amp;utm_source=desktop"><img
-										 src="//upload.jianshu.io/admin_banners/web_images/4514/a9212731b77ad524cb832c35d314348ec0b66235.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<swiper-slide class="item ">
-								<div class="banner" data-banner-name="新书推广 | 当你想要学民乐web">
-									<a target="_blank" href="http://product.dangdang.com/25574123.html?unionid=p-107512535m"><img src="//upload.jianshu.io/admin_banners/web_images/4539/814816838070065013af51fac80e6a03e453a660.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<swiper-slide class="item ">
-								<div class="banner" data-banner-name="众乐纪填词征集">
-									<a target="_blank" href="https://www.jianshu.com/p/910215a8ae5f?utm_medium=index-banner&amp;utm_source=desktop"><img
-										 src="//upload.jianshu.io/admin_banners/web_images/4528/cfbfae092b2d7f29a4bc52e906dfd89a5e8ac16d.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<swiper-slide class="item ">
-								<div class="banner" data-banner-name="新书推广 | 共情">
-									<a target="_blank" href="http://product.dangdang.com/25546724.html"><img src="//upload.jianshu.io/admin_banners/web_images/4537/e4fc8843fabbf17e6f5660eea8ce0661b00b3089.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-										 alt="540" /></a>
-								</div>
-							</swiper-slide>
-							<div class="swiper-pagination" slot="pagination"></div>
-						</swiper>
-						<div id="listContainer">
-							<ul class="note-list" infinite-scroll-url="/">
-								<li id="note-33195705" data-note-id="33195705" class="have-img" v-for="(item,index) in items" :key="item.id">
-									<a class="wrap-img"  target="_blank">
-										<img class="  img-blur-done" v-lazy="item.avatar" alt="120">
-									</a>
-									<div class="content">
-										<a class="title" target="_blank" :href="item.articleHeft">{{item.title}}</a>
-										<p class="abstract" v-html="item.content">
-										</p>
-										<div class="meta">
-											<a class="nickname" target="_blank" href="/u/b15b81aa0573">{{item.author}}</a>
-											<a target="_blank" href="/p/9aa79f0cffc7#comments">
-												<i class="iconfont icon-message"></i> {{item.comments}}
-											</a> <span><i :class="['iconfont','icon-heart','animated',item.isLike ==1 ? 'icon-heart-on heartZoom':'']"
-												 :data-index=item.isLike @click="like(index,item.isLike)"></i> {{item.like}}</span>
-										</div>
+			<div class="wraper" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+				<div class="left-warp">
+					<swiper class="carousel-inner " :options="swiperOption" ref="mySwiper">
+						<swiper-slide class="item">
+							<div class="banner" data-banner-name="小说连载">
+								<a target="_blank" href="https://www.jianshu.com/p/c7d9037eba2f?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4529/d8d780d8dd4a32485655815c2cb4e367b61cb15c.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="音频连载">
+								<a target="_blank" href="https://www.jianshu.com/p/ea92638c0833?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4524/65fb6e8f81ccbbc7dacf5c380e0366a003ba7881.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="简书钻">
+								<a target="_blank" href="https://www.jianshu.com/p/0359f7d253a2?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4533/fc384bd68d23df5114c41c3ef12ba12dd000e244.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="行距杯征文大赛">
+								<a target="_blank" href="https://www.jianshu.com/mobile/campaign/common/hangju?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4486/240ebd0212e4fce11577abbe3169c9345637ee58.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="简书周爆">
+								<a target="_blank" href="https://www.jianshu.com/p/b5141cda9fd7?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4514/a9212731b77ad524cb832c35d314348ec0b66235.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="新书推广 | 当你想要学民乐web">
+								<a target="_blank" href="http://product.dangdang.com/25574123.html?unionid=p-107512535m"><img src="//upload.jianshu.io/admin_banners/web_images/4539/814816838070065013af51fac80e6a03e453a660.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="众乐纪填词征集">
+								<a target="_blank" href="https://www.jianshu.com/p/910215a8ae5f?utm_medium=index-banner&amp;utm_source=desktop"><img
+									 src="//upload.jianshu.io/admin_banners/web_images/4528/cfbfae092b2d7f29a4bc52e906dfd89a5e8ac16d.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<swiper-slide class="item ">
+							<div class="banner" data-banner-name="新书推广 | 共情">
+								<a target="_blank" href="http://product.dangdang.com/25546724.html"><img src="//upload.jianshu.io/admin_banners/web_images/4537/e4fc8843fabbf17e6f5660eea8ce0661b00b3089.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+									 alt="540" /></a>
+							</div>
+						</swiper-slide>
+						<div class="swiper-pagination" slot="pagination"></div>
+					</swiper>
+					<div id="listContainer">
+						<ul class="note-list" infinite-scroll-url="/">
+							<li id="note-33195705" data-note-id="33195705" class="have-img" v-for="(item,index) in items" :key="item.id">
+								<a class="wrap-img" target="_blank">
+									<img class="  img-blur-done" v-lazy="item.avatar" alt="120">
+								</a>
+								<div class="content">
+									<a class="title" target="_blank" :href="item.articleHeft">{{item.title}}</a>
+									<p class="abstract" v-html="item.content">
+									</p>
+									<div class="meta">
+										<a class="nickname" target="_blank" href="/u/b15b81aa0573">{{item.author}}</a>
+										<a target="_blank" href="/p/9aa79f0cffc7#comments">
+											<i class="iconfont icon-message"></i> {{item.comments}}
+										</a> <span><i :class="['iconfont','icon-heart','animated',item.isLike ==1 ? 'icon-heart-on heartZoom':'']"
+											 :data-index=item.isLike @click="like(index,item.isLike)"></i> {{item.like}}</span>
 									</div>
+								</div>
+							</li>
+						</ul>
+						<div class="loading_warp" v-loading="loading">
+							<div v-show="readmore" class="read_more">查看全部</div>
+						</div>
+					</div>
+				</div>
+				<div class="right-wraper">
+					<div class="col-xs-7 col-xs-offset-1 aside">
+						<div class="board">
+							<a target="_blank" href="/trending/weekly?utm_medium=index-banner-s&amp;utm_source=desktop"><img src="../static/images/banner-s-3-7123fd94750759acf7eca05b871e9d17.png"
+								 alt="Banner s 3"></a>
+							<a target="_blank" href="/trending/monthly?utm_medium=index-banner-s&amp;utm_source=desktop"><img src="../static/images/banner-s-4-b70da70d679593510ac93a172dfbaeaa.png"
+								 alt="Banner s 4"></a>
+							<a utm_medium="index-banner-s" target="_blank" href="/mobile/books?category_id=284"><img src="../static/images/banner-s-5-4ba25cf5041931a0ed2062828b4064cb.png"
+								 alt="Banner s 7"></a>
+							<a utm_medium="index-banner-s" target="_blank" href="/publications"><img src="../static/images/banner-s-6-c4d6335bfd688f2ca1115b42b04c28a7.png"
+								 alt="Banner s 5"></a>
+							<a target="_blank" href="/c/e048f1a72e3d?utm_medium=index-banner-s&amp;utm_source=desktop"><img src="../static/images/banner-s-7-1a0222c91694a1f38e610be4bf9669be.png"
+								 alt="Banner s 6"></a>
+						</div>
+
+						<!-- 首页右侧 App 下载提示 -->
+						<a id="index-aside-download-qrbox" class="col-xs-8 download" data-toggle="popover" data-placement="top" data-html="true"
+						 data-trigger="hover" data-content="<img src=&quot;//cdn2.jianshu.io/assets/web/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png&quot; alt=&quot;Download index side qrcode&quot; />"
+						 href="/apps?utm_medium=desktop&amp;utm_source=index-aside-click" data-original-title="" title="">
+							<img class="qrcode" src="../static/images/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png"
+							 alt="Download index side qrcode">
+							<div class="info">
+								<div class="title">下载W-blogApp<i class="iconfont ic-link"></i></div>
+								<div class="description">随时随地发现和创作内容</div>
+							</div>
+						</a>
+						<!-- 推荐作者 -->
+						<div class="recommended-authors">
+							<div class="title"><span>推荐作者</span> <a class="page-change"><i class="iconfont ic-search-change" style="transform: rotate(360deg);"></i>
+									换一批
+								</a></div>
+							<ul class="list">
+								<li><a href="/u/c5580cc1c3f4?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
+										 src="//upload.jianshu.io/users/upload_avatars/3627484/eb973bb9-37ba-4d07-acec-850c0a66d1bb.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
+									<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
+									</a> <a href="/u/c5580cc1c3f4?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
+										简书大学堂
+									</a>
+									<p>
+										写了1380k字 · 24.3k喜欢
+									</p>
+								</li>
+								<li><a href="/u/b91cc2d507d0?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
+										 src="//upload.jianshu.io/users/upload_avatars/8972166/065e6770-aacc-4365-9abf-c46a59cdf7f6.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
+									<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
+									</a> <a href="/u/b91cc2d507d0?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
+										冰千里
+									</a>
+									<p>
+										写了432.6k字 · 6.8k喜欢
+									</p>
+								</li>
+								<li><a href="/u/631131ed01af?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
+										 src="//upload.jianshu.io/users/upload_avatars/2564926/88bfdbeeb083.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
+									<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
+									</a> <a href="/u/631131ed01af?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
+										王老师八卦美术史
+									</a>
+									<p>
+										写了137.6k字 · 892喜欢
+									</p>
+								</li>
+								<li><a href="/u/080bb4eac1c9?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
+										 src="//upload.jianshu.io/users/upload_avatars/13213889/7314c5cc-ca7f-4542-b914-2c8dffaf324d.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
+									<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
+									</a> <a href="/u/080bb4eac1c9?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
+										无限猴子
+									</a>
+									<p>
+										写了98.1k字 · 313喜欢
+									</p>
+								</li>
+								<li><a href="/u/62eb2baf2c62?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
+										 src="//upload.jianshu.io/users/upload_avatars/10849033/a3e12f47-c81c-4659-9c80-117f8b337408.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
+									<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
+									</a> <a href="/u/62eb2baf2c62?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
+										lostdays
+									</a>
+									<p>
+										写了164.1k字 · 1.2k喜欢
+									</p>
 								</li>
 							</ul>
 						</div>
 					</div>
-					<div class="right-wraper">
-						<div class="col-xs-7 col-xs-offset-1 aside">
-							<div class="board">
-								<a target="_blank" href="/trending/weekly?utm_medium=index-banner-s&amp;utm_source=desktop"><img src="//cdn2.jianshu.io/assets/web/banner-s-3-7123fd94750759acf7eca05b871e9d17.png"
-									 alt="Banner s 3"></a>
-								<a target="_blank" href="/trending/monthly?utm_medium=index-banner-s&amp;utm_source=desktop"><img src="//cdn2.jianshu.io/assets/web/banner-s-4-b70da70d679593510ac93a172dfbaeaa.png"
-									 alt="Banner s 4"></a>
-								<a utm_medium="index-banner-s" target="_blank" href="/mobile/books?category_id=284"><img src="//cdn2.jianshu.io/assets/web/banner-s-7-1a0222c91694a1f38e610be4bf9669be.png"
-									 alt="Banner s 7"></a>
-								<a utm_medium="index-banner-s" target="_blank" href="/publications"><img src="//cdn2.jianshu.io/assets/web/banner-s-5-4ba25cf5041931a0ed2062828b4064cb.png"
-									 alt="Banner s 5"></a>
-								<a target="_blank" href="/c/e048f1a72e3d?utm_medium=index-banner-s&amp;utm_source=desktop"><img src="//cdn2.jianshu.io/assets/web/banner-s-6-c4d6335bfd688f2ca1115b42b04c28a7.png"
-									 alt="Banner s 6"></a>
-							</div>
-
-							<!-- 首页右侧 App 下载提示 -->
-							<a id="index-aside-download-qrbox" class="col-xs-8 download" data-toggle="popover" data-placement="top"
-							 data-html="true" data-trigger="hover" data-content="<img src=&quot;//cdn2.jianshu.io/assets/web/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png&quot; alt=&quot;Download index side qrcode&quot; />"
-							 href="/apps?utm_medium=desktop&amp;utm_source=index-aside-click" data-original-title="" title="">
-								<img class="qrcode" src="//cdn2.jianshu.io/assets/web/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png"
-								 alt="Download index side qrcode">
-								<div class="info">
-									<div class="title">下载W-blogApp<i class="iconfont ic-link"></i></div>
-									<div class="description">随时随地发现和创作内容</div>
-								</div>
-							</a>
-							<!-- 推荐作者 -->
-							<div class="recommended-authors">
-								<div class="title"><span>推荐作者</span> <a class="page-change"><i class="iconfont ic-search-change" style="transform: rotate(360deg);"></i>
-										换一批
-									</a></div>
-								<ul class="list">
-									<li><a href="/u/c5580cc1c3f4?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
-											 src="//upload.jianshu.io/users/upload_avatars/3627484/eb973bb9-37ba-4d07-acec-850c0a66d1bb.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
-										<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-										</a> <a href="/u/c5580cc1c3f4?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
-											简书大学堂
-										</a>
-										<p>
-											写了1380k字 · 24.3k喜欢
-										</p>
-									</li>
-									<li><a href="/u/b91cc2d507d0?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
-											 src="//upload.jianshu.io/users/upload_avatars/8972166/065e6770-aacc-4365-9abf-c46a59cdf7f6.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
-										<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-										</a> <a href="/u/b91cc2d507d0?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
-											冰千里
-										</a>
-										<p>
-											写了432.6k字 · 6.8k喜欢
-										</p>
-									</li>
-									<li><a href="/u/631131ed01af?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
-											 src="//upload.jianshu.io/users/upload_avatars/2564926/88bfdbeeb083.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
-										<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-										</a> <a href="/u/631131ed01af?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
-											王老师八卦美术史
-										</a>
-										<p>
-											写了137.6k字 · 892喜欢
-										</p>
-									</li>
-									<li><a href="/u/080bb4eac1c9?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
-											 src="//upload.jianshu.io/users/upload_avatars/13213889/7314c5cc-ca7f-4542-b914-2c8dffaf324d.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
-										<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-										</a> <a href="/u/080bb4eac1c9?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
-											无限猴子
-										</a>
-										<p>
-											写了98.1k字 · 313喜欢
-										</p>
-									</li>
-									<li><a href="/u/62eb2baf2c62?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="avatar"><img
-											 src="//upload.jianshu.io/users/upload_avatars/10849033/a3e12f47-c81c-4659-9c80-117f8b337408.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp"></a>
-										<a class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-										</a> <a href="/u/62eb2baf2c62?utm_source=desktop&amp;utm_medium=index-users" target="_blank" class="name">
-											lostdays
-										</a>
-										<p>
-											写了164.1k字 · 1.2k喜欢
-										</p>
-									</li>
-								</ul> 
-							</div>
-						</div>
-					</div>
 				</div>
-			
-
+			</div>
 		</div>
-
-
+		<div class="loadMore_box"></div>
 	</div>
 
 </template>
@@ -184,7 +184,10 @@
 		swiper,
 		swiperSlide
 	} from 'vue-awesome-swiper'
-import { error } from 'util';
+	import {
+		error
+	} from 'util';
+import { totalmem } from 'os';
 	export default {
 		components: {
 			swiper,
@@ -215,20 +218,54 @@ import { error } from 'util';
 						clickable: true,
 					},
 				},
-				items:[]
+				busy: false,
+				items: [],
+				currentPage :1,
+				pageSize:10,
+				totalPage :0,
+				loading:false,
+				readmore:false
 			}
 		},
 		methods: {
-			onload: function(){
+			onload: function (flag) {
 				let _this = this
-				_this.$axios.post(_this.apiUrl+'/article/article',{
-					currentPage:1,
-					pageSize:10
-				}).then(data=>{
-					_this.items = data.data.data
-				}).catch(error=>{
+				_this.loading = true
+				_this.$axios.post(_this.apiUrl + '/article/article', {
+					currentPage: _this.currentPage,
+					pageSize: _this.pageSize
+				}).then(res => {
+					if(flag){
+						// _this.loading = false
+						_this.items = _this.items.concat(res.data.data)
+						if(res.data.data.length == 0 ){
+							_this.busy = true
+						}else{
+							_this.busy = false
+						}
+					}else{
+						// _this.loading = false
+						_this.items = res.data.data
+						_this.totalPage = Math.ceil(res.data.totalCount/_this.pageSize)
+					}
+				
+				}).catch(error => {
 
 				})
+			},
+			loadMore: function () {
+				let _this = this
+				_this.loading = true
+				_this.currentPage = _this.currentPage + 1
+				if(_this.currentPage<=_this.totalPage){
+					_this.onload(true)
+					
+				}else{
+					this.$message('没有更多了');
+					_this.loading = false
+					_this.readmore =true
+					_this.busy = true
+				}
 			},
 			changeType: function () {
 				let token = sessionStorage.getItem('token');
@@ -272,16 +309,31 @@ import { error } from 'util';
 	body {
 		background: #fff;
 	}
-	.contaniner{
+	.loading_warp{
+		width: 100%;
+		height: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.read_more{
+		color: #323232;
+		border: 1px solid #e1e1e1;
+		padding: 10px;
+		border-radius: 3px;
+		cursor: pointer;
+	}
+	.contaniner {
 		overflow: auto;
 		height: calc(100vh - 61px);
 	}
+
 	.wraper {
 		max-width: 960px;
 		margin: auto;
 		display: flex;
 		margin-top: 30px;
-	
+
 	}
 
 	.carousel-inner {
@@ -293,8 +345,9 @@ import { error } from 'util';
 		overflow-x: hidden;
 		height: calc(100vh - 80px);
 	}
-	.left-warp{
-	}
+
+	.left-warp {}
+
 	.banner {
 		width: 625px;
 
@@ -428,11 +481,13 @@ import { error } from 'util';
 		animation-name: heartZoom;
 		animation-duration: 1s;
 	}
-	.right-wraper{
+
+	.right-wraper {
 		width: 280px;
 		display: flex;
 		flex-direction: column;
 	}
+
 	.aside {
 		margin-left: 20px;
 	}

@@ -4,12 +4,14 @@ import router from './router/index'
 import store from './store/store'
 import axios from 'axios'
 import ElementUI from 'element-ui'
+import infiniteScroll from 'vue-infinite-scroll'
 import 'element-ui/lib/theme-chalk/index.css'
 import './static/css/animate.css'
 import './static/css/reset.css'
 import VueLazyload from 'vue-lazyload' 
 // import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+
 // import MuseUI from 'muse-ui';
 // import 'muse-ui/dist/muse-ui.css';
 
@@ -21,6 +23,7 @@ Vue.prototype.apiUrl = debug ? 'http://localhost:8888':'http://localhost:8888';
 Vue.prototype.$axios = axios
 Vue.use(ElementUI)
 Vue.use(VueLazyload)
+Vue.use(infiniteScroll)
 // Vue.use(MuseUI)
 
 //添加请求拦截器
