@@ -11,7 +11,8 @@ import './static/css/reset.css'
 import VueLazyload from 'vue-lazyload' 
 // import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-
+import VueSocketio from 'vue-socket.io'
+import socketio from 'socket.io-client'
 // import MuseUI from 'muse-ui';
 // import 'muse-ui/dist/muse-ui.css';
 
@@ -24,6 +25,7 @@ Vue.prototype.$axios = axios
 Vue.use(ElementUI)
 Vue.use(VueLazyload)
 Vue.use(infiniteScroll)
+Vue.use(VueSocketio, socketio('http://localhost:8888'));
 // Vue.use(MuseUI)
 
 //添加请求拦截器

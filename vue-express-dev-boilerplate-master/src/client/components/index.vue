@@ -224,7 +224,8 @@ import { totalmem } from 'os';
 				pageSize:10,
 				totalPage :0,
 				loading:false,
-				readmore:false
+				readmore:false,
+				connectMsg:'我来了'
 			}
 		},
 		methods: {
@@ -284,14 +285,26 @@ import { totalmem } from 'os';
 				}
 			},
 		},
+		sockets: {
+			connect(data){
+				console.log(data)
+				
+			},
+            message(data) {                                 //监听message事件，方法是后台定义和提供的
+				console.log(this.$socket.id)
+                console.log(data);
+
+            }
+
+        },
 		computed: {
 			swiper() {
 				return this.$refs.mySwiper.swiper
 			}
 		},
 		mounted: function () {
-			console.log(swiper)
 			this.onload();
+			this.$socket.emit('hi', this.connectMsg); 
 		},
 		created: function () {
 

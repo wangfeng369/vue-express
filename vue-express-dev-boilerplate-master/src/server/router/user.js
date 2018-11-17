@@ -17,35 +17,35 @@ router.get('/', function (req, res, next) {
 
     // res.sendfile("./views/index.html");
 });
-router.post('/userInfo', function (req, res, next) {
-    let include = [{
-        association: Student.belongsTo(Class, {
-            foreignKey: 'classId'
-        }),
+// router.post('/userInfo', function (req, res, next) {
+//     let include = [{
+//         association: Student.belongsTo(Class, {
+//             foreignKey: 'classId'
+//         }),
 
-    }];
-    let currentPage = req.body.currentPage
-    let pageSize = req.body.pageSize
-    let totalCount = 0
-    let offset = (currentPage - 1) * pageSize
-    let _token = req.headers.token
-    sequelize.transaction(t => {
-        return Student.findAndCountAll({
-                include: include,
-                offset: offset,
-                limit: pageSize
-            })
-            .then((result) => {
-                totalCount = result.count
-                res.send({
-                    'data': result.rows,
-                    'totalCount': totalCount
-                })
-            }).catch((err) => {
-                console.error(err);
-            });
-    })
-})
+//     }];
+//     let currentPage = req.body.currentPage
+//     let pageSize = req.body.pageSize
+//     let totalCount = 0
+//     let offset = (currentPage - 1) * pageSize
+//     let _token = req.headers.token
+//     sequelize.transaction(t => {
+//         return Student.findAndCountAll({
+//                 include: include,
+//                 offset: offset,
+//                 limit: pageSize
+//             })
+//             .then((result) => {
+//                 totalCount = result.count
+//                 res.send({
+//                     'data': result.rows,
+//                     'totalCount': totalCount
+//                 })
+//             }).catch((err) => {
+//                 console.error(err);
+//             });
+//     })
+// })
 router.post('/login', function (req, res, next) {
     console.log(req.body)
     let username = req.body.userName

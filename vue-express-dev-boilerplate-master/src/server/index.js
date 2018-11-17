@@ -18,8 +18,10 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 const jwt = require('jsonwebtoken')
 const tokenCommon = require('./public/token')
 import config from '../../build/webpack.dev.conf'
+import socketFn from './controller/socket/socket'
 const app = express()
-
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 // 引入history模式让浏览器进行前端路由页面跳转
 app.use(history())
 
@@ -50,9 +52,10 @@ app.all('*', function (req, res, next) {
 });
 
 app.use(function (req, res, next) {
+
   let url = req.url
   let urlA = url.split('.')
-  if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr') {
+  if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket') {
     let token = req.headers.token;
     jwt.verify(token, tokenCommon.secret, function (err, decoded) {
       if (err) {
@@ -90,6 +93,11 @@ app.get('/', function (req, res) {
   res.sendFile('../views/index.html')
 })
 
+//socket部分
+io.on('connection', function(socket) {
+  socketFn.socketInit(socket)
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found')
@@ -106,7 +114,7 @@ app.use(function (err, req, res, next) {
 
 // 设置监听端口
 const SERVER_PORT = 8888
-app.listen(SERVER_PORT, () => {
+server.listen(SERVER_PORT, () => {
   console.info(`服务已经启动，监听端口${SERVER_PORT}`)
 })
 
