@@ -1,7 +1,7 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('student', {
+	return sequelize.define('product_type', {
 		id: {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
@@ -13,21 +13,14 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			defaultValue: ''
 		},
-		sex: {
-			type: DataTypes.STRING(36),
-			allowNull: false
-		},
-		class_id: {
-			type: DataTypes.INTEGER(11),
-			allowNull: true
-		},
-		is_delete: {
-			type: DataTypes.STRING(36),
+		isDel: {
+			field:"is_del",
+			type: DataTypes.STRING(255),
 			allowNull: false,
 			defaultValue: '0'
 		}
 	}, {
-		tableName: 'student',
+		tableName: 'product_type',
 		timestamps: false,
 		underscored: true
 	});

@@ -13,7 +13,6 @@
                     <button v-if="signIn" type="submit" @click="submit()" id="login-button">Login</button>
                 </form>
             </div>
-
             <ul class="bg-bubbles">
                 <li></li>
                 <li></li>

@@ -52,7 +52,6 @@ app.all('*', function (req, res, next) {
 });
 
 app.use(function (req, res, next) {
-
   let url = req.url
   let urlA = url.split('.')
   if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket') {

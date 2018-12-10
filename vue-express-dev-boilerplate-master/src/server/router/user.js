@@ -47,25 +47,27 @@ router.get('/', function (req, res, next) {
 //     })
 // })
 router.post('/login', function (req, res, next) {
-    console.log(req.body)
-    let username = req.body.userName
+    let userName = req.body.userName
     let pwd = req.body.password
+    console.log(req.body)
     User.findOne({
         where: {
-            userName: username
+            id: 1
         }
     }).then(data => {
+        console.log('1111'+data)
         let token = jwt.sign(
             data.toJSON(),
             secret, {
                 'expiresIn': tokenScrete.tokenExp
             }
         );
-        if (data.userName == username && data.password == pwd) {
+       
+        if (data.userName == userName && data.password == pwd) {
             res.send({
                 sucess: '0',
                 token: token,
-                name: data.name
+                name: data.userName
             })
         } else {
             res.send({

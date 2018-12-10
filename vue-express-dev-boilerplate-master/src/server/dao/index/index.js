@@ -15,8 +15,7 @@ class article {
         return articleDao.findAndCountAll({
             offset: offset,
             limit: pageSize
-        })
-        
+        })    
     } 
  
    

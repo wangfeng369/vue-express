@@ -8,20 +8,15 @@ module.exports = function(sequelize, DataTypes) {
 			primaryKey: true,
 			autoIncrement: true
 		},
-		userName: {
-			field:'user_name',
-			type: DataTypes.STRING(255),
-			allowNull: false,
-			defaultValue: ''
-		},
 		password: {
 			type: DataTypes.STRING(255),
-			allowNull: false,
+			allowNull: true,
 			defaultValue: ''
 		},
-		name:{
+		userName: {
+			field:"user_name",
 			type: DataTypes.STRING(255),
-			allowNull: false,
+			allowNull: true,
 			defaultValue: ''
 		}
 	}, {
