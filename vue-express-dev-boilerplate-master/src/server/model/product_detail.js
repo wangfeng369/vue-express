@@ -51,7 +51,7 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: ''
 		},
 		isDel: {
-			filed:"is_del",
+			field:"is_del",
 			type: DataTypes.STRING(255),
 			allowNull: false,
 			defaultValue: '0'

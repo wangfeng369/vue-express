@@ -8,6 +8,7 @@ import cors from 'cors'
 import indexRouter from './router/index'
 import userRouter from './router/user'
 import fileRouter from './router/file'
+import apiRouter from './router/api'
 import articleRouter from './router/article'
 // 引入history模块
 import history from 'connect-history-api-fallback'
@@ -45,37 +46,38 @@ app.use(cors());
 app.all('*', function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET");
   res.header("X-Powered-By", ' 3.2.1')
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
 });
 
-app.use(function (req, res, next) {
-  let url = req.url
-  let urlA = url.split('.')
-  if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket') {
-    let token = req.headers.token;
-    jwt.verify(token, tokenCommon.secret, function (err, decoded) {
-      if (err) {
-        res.send({
-          success: false,
-          message: 'token过期',
-          code: 1001,
-          err:err
-        });
-      } else {
-        next();
-      }
-    })
-  } else {
-    next();
-  }
-});
+// app.use(function (req, res, next) {
+//   let url = req.url
+//   let urlA = url.split('.')
+//   if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket') {
+//     let token = req.headers.token;
+//     jwt.verify(token, tokenCommon.secret, function (err, decoded) {
+//       if (err) {
+//         res.send({
+//           success: false,
+//           message: 'token过期',
+//           code: 1001,
+//           err:err
+//         });
+//       } else {
+//         next();
+//       }
+//     })
+//   } else {
+//     next();
+//   }
+// });
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/article',articleRouter)
 app.use('/file', fileRouter)
+app.use('/api',apiRouter)
 const compiler = webpack(config)
 //webpack 中间件
 app.use(webpackDevMiddleware(compiler, {

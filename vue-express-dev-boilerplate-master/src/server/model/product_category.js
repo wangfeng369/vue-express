@@ -17,7 +17,6 @@ module.exports = function(sequelize, DataTypes) {
 			field:"products_id",
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
-			primaryKey: true
 		},
 		isDel: {
 			field:"is_del",

@@ -1,8 +1,8 @@
 
 var  Sequelize = require('sequelize');
 // 创建数据库连接
-var sequelize = new Sequelize('demo', 'root', '123', {
-    host: 'localhost',
+var sequelize = new Sequelize('food', 'root', 'wangfeng123', {
+    host: '120.79.213.80',
     dialect: 'mysql',
     pool: {
         max: 5,
