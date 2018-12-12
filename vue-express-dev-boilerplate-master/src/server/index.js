@@ -52,27 +52,32 @@ app.all('*', function (req, res, next) {
   next();
 });
 
-// app.use(function (req, res, next) {
-//   let url = req.url
-//   let urlA = url.split('.')
-//   if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket') {
-//     let token = req.headers.token;
-//     jwt.verify(token, tokenCommon.secret, function (err, decoded) {
-//       if (err) {
-//         res.send({
-//           success: false,
-//           message: 'token过期',
-//           code: 1001,
-//           err:err
-//         });
-//       } else {
-//         next();
-//       }
-//     })
-//   } else {
-//     next();
-//   }
-// });
+app.use(function (req, res, next) {
+  let url = req.url
+  let urlA = url.split('.')
+  let urlB = ''
+  if(urlA[0] != undefined){
+    urlB = urlA[0].split('/')
+  }
+
+  if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket'&&urlB[1] !='api') {
+    let token = req.headers.token;
+    jwt.verify(token, tokenCommon.secret, function (err, decoded) {
+      if (err) {
+        res.send({
+          success: false,
+          message: 'token过期',
+          code: 1001,
+          err:err
+        });
+      } else {
+        next();
+      }
+    })
+  } else {
+    next();
+  }
+});
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/article',articleRouter)

@@ -52,7 +52,7 @@ router.post('/login', function (req, res, next) {
     console.log(req.body)
     User.findOne({
         where: {
-            id: 1
+            userName: userName
         }
     }).then(data => {
         console.log('1111'+data)

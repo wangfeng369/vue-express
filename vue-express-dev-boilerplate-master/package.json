@@ -10,7 +10,8 @@
   },
   "author": "wang",
   "license": "MIT",
-  "dependencies": {
+
+  "devDependencies": {
     "babel-runtime": "^6.23.0",
     "cheerio": "^1.0.0-rc.2",
     "cors": "^2.8.4",
@@ -45,9 +46,7 @@
     "vue-infinite-scroll": "^2.0.2",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^2.8.1",
-    "vue-socket.io": "^2.1.1-b"
-  },
-  "devDependencies": {
+    "vue-socket.io": "^2.1.1-b",
     "autoprefixer": "^6.7.2",
     "axios": "^0.16.2",
     "babel-core": "^6.25.0",

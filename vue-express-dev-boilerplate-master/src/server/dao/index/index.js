@@ -35,7 +35,8 @@ class article {
         return products.findOne({
             where:{
                 productName:productsName,
-                typeId :typeId
+                typeId :typeId,
+                isDel:0
             }
         })
     }
@@ -50,7 +51,8 @@ class article {
         return productCategory.findOne({
             where:{
                 name:categoryName,
-                productsId :productsId
+                productsId :productsId,
+                isDel:0
             }
         })
     }
@@ -64,7 +66,8 @@ class article {
         return productDetail.findOne({
             where:{
                 name:foodName,
-                categoryId :categoryId
+                categoryId :categoryId,
+                isDel:0
             }
         })
     }
@@ -81,16 +84,104 @@ class article {
         })
     }
     searchListType(req){
-        return productType.findAll()
+        return productType.findAll({
+            where:{
+                isDel:0
+            }
+        })
     }
     searchProdctsList(req){
-        return products.findAll()
+        return products.findAll({
+            where:{
+                isDel:0
+            }
+        })
     }
     searchcategoryList(req){
-        return productCategory.findAll()
+        return productCategory.findAll({
+            where:{
+                isDel:0
+            }
+        })
     }
     searchDetailList(req){
-        return productDetail.findAll()
+        return productDetail.findAll({
+            raw:true,
+            where:{
+                isDel:0
+            }
+        })
+    }
+    searchDetailIdList(req,id){
+        return productDetail.findAll({
+            raw:true,
+            where:{
+                id:id,
+                isDel:0
+            }
+        })
+    }
+    searchOneDetailIdList(id){
+        return productDetail.findOne({
+            raw:true,
+            where:{
+                id:id,
+                isDel:0
+            }
+        })
+    }
+    searchCategoryIdNameList(id){
+        return productCategory.findOne({
+            where:{
+                id:id,
+                isDel:0
+            },
+            raw:true
+        })
+    }
+    searchProdctsIdNameList(id){
+        return products.findOne({
+            where:{
+                id:id,
+                isDel:0
+            },
+            raw:true
+        })
+    }
+    searchFirstTypeIdNameList(id){
+        return productType.findOne({
+            where:{
+                id:id,
+                isDel:0
+            },
+            raw:true
+        })
+    }
+    updateDetail(id,foodName,foodCode,foodEnName,foodSize,deadLine,palce,pic,categoryId){
+        return productDetail.update({
+            name : foodName,
+            code : foodCode,
+            englishName : foodEnName,
+            size : foodSize,
+            deadline : deadLine,
+            place : palce,
+            pic : pic,
+        },{
+            where:{
+                id : id
+            }
+        }
+        )
+    }
+    deleteDetailList(id){
+        return productDetail.update({
+            isDel :1
+        },{
+            where:{
+                id : id
+            }
+        }   
+        )
     }
 }
 
