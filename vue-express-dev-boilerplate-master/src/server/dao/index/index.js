@@ -71,7 +71,7 @@ class article {
             }
         })
     }
-    createFoodList(req,foodName,foodCode,foodEnName,foodSize,deadLine,palce,pic,categoryId){
+    createFoodList(req,foodName,foodCode,foodEnName,foodSize,deadLine,palce,pic,categoryId,price,detail){
         return productDetail.create({
             name:foodName,
             englishName:foodEnName,
@@ -80,7 +80,9 @@ class article {
             deadline:deadLine,
             place:palce,
             pic:pic,
-            categoryId:categoryId
+            categoryId:categoryId,
+            price:price,
+            detail:detail
         })
     }
     searchListType(req){
@@ -157,7 +159,7 @@ class article {
             raw:true
         })
     }
-    updateDetail(id,foodName,foodCode,foodEnName,foodSize,deadLine,palce,pic,categoryId){
+    updateDetail(id,foodName,foodCode,foodEnName,foodSize,deadLine,palce,pic,price,detail,categoryId){
         return productDetail.update({
             name : foodName,
             code : foodCode,
@@ -166,6 +168,8 @@ class article {
             deadline : deadLine,
             place : palce,
             pic : pic,
+            price:price,
+            detail:detail
         },{
             where:{
                 id : id

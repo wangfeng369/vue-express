@@ -43,11 +43,21 @@
              let foodSize = req.body.foodSize
              let deadLine = req.body.deadLine
              let palce = req.body.palce
+             let price = req.body.price
+             let detail = req.body.detail
              let file = req.files
+             let picArray = []
+             let pic = ''
+             console.log(req.files)
+             for(let i=0;i<file.length;i++){
+                picArray.push(file[i].originalname)
+             }
+             pic = picArray.join()
+             console.log(pic)
              let categoryName = req.body.categoryName
              let productsName = req.body.productsName
              let typeName = req.body.typeName
-             let pic = file[0].originalname
+           
              let productsTypeResult = await article.searchProductsType(req, typeName)
              let createType = -1;
              let productsId = -1;
@@ -73,7 +83,8 @@
                  categoryId = producsCategoryResult.id
              }
              let productsDeatilResult = await article.searchFoodList(req, foodName, categoryId)
-             if (!productsDeatilResult) {
+             console.log(productsDeatilResult)
+             if (productsDeatilResult !='') {
                 if(changeDetailId !=''&& changeDetailId !=null&& changeDetailId !=undefined){
                     // let changeDetailListResult = await article.searchOneDetailIdList(changeDetailId)
                     // changeDetailListResult.name = foodName
@@ -84,20 +95,26 @@
                     // changeDetailListResult.place = palce
                     // changeDetailListResult.pic = pic
                     // let resulet = await changeDetailListResult.save()
-                    let changeDetailListResult = await article.updateDetail(changeDetailId,foodName, foodCode, foodEnName, foodSize, deadLine, palce, pic, categoryId)
+                    let changeDetailListResult = await article.updateDetail(changeDetailId,foodName, foodCode, foodEnName, foodSize, deadLine, palce, pic, price,detail,categoryId)
                     res.send({
                         success: 0,
                         info: '修改成功',
                         result:changeDetailListResult
                     })
                 }else{
-                    let productsDeatilId = await article.createFoodList(req, foodName, foodCode, foodEnName, foodSize, deadLine, palce, pic, categoryId)
+                    let productsDeatilId = await article.createFoodList(req, foodName, foodCode, foodEnName, foodSize, deadLine, palce, pic, categoryId,price,detail)
                     res.send({
                         success: 0,
                         info: '新增成功'
                     })
                 } 
-             } 
+             }else{
+                 res.send({
+                    success: -1,
+                    info: '查询发生错误'
+                 })
+             }
+             
          } catch (err) {
              console.log(err)
              res.send({
