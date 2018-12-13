@@ -74,8 +74,6 @@ router.post('/login', function (req, res, next) {
                 'info': '用户名或密码错误'
             })
         }
-
-
     }).catch(error => {
         res.send('用户名或密码错误')
         console.log(error)
@@ -91,20 +89,25 @@ router.post('/register', function (req, res, next) {
             userName: username
         }
     }).then(data => {
-        if (data.userName == username) {
+        if (data &&data.userName == username) {
             res.send({
                 'info': '用户名已注册'
             })
+        }else{
+            User.create({
+                userName: username,
+                password: pwd,
+                name: name
+            }).then(data => {
+                res.send({
+                    sucess: '0'
+                })
+            })
         }
     }).catch(error => {
-        User.create({
-            userName: username,
-            password: pwd,
-            name: name
-        }).then(data => {
-            res.send({
-                sucess: '0'
-            })
+        res.send({
+            sucess: '-1',
+            info:'发生未知错误'
         })
         console.log(error)
     })
