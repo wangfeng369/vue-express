@@ -20,9 +20,14 @@ const jwt = require('jsonwebtoken')
 const tokenCommon = require('./public/token')
 import config from '../../build/webpack.dev.conf'
 import socketFn from './controller/socket/socket'
+const https = require('https');
 const app = express()
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+let privatekey = fs.readFileSync('./src/server/config/1633057_www.wangfeng.kim.key', 'utf8');
+let certificate = fs.readFileSync('./src/server/config/1633057_www.wangfeng.kim.pem', 'utf8');
+let options={key:privatekey, cert:certificate};
+let httpsServer = https.createServer(options, app);
 // 引入history模式让浏览器进行前端路由页面跳转
 app.use(history())
 
@@ -59,7 +64,7 @@ app.use(function (req, res, next) {
   if(urlA[0] != undefined){
     urlB = urlA[0].split('/')
   }
-
+  console.log(urlB)
   if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket'&&urlB[1] !='api') {
     let token = req.headers.token;
     jwt.verify(token, tokenCommon.secret, function (err, decoded) {
@@ -123,5 +128,6 @@ const SERVER_PORT = 8888
 server.listen(SERVER_PORT, () => {
   console.info(`服务已经启动，监听端口${SERVER_PORT}`)
 })
-
+const httpsPort = 1111
+httpsServer.listen(httpsPort,function () { console.log('Https server listening on port ' + httpsPort); });
 export default app

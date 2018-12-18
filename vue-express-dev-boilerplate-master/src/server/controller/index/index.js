@@ -125,10 +125,12 @@
      }
      async searchTotalList(req, res, next) {
          try {
-             let searchTotalListTypeResult = await article.searchListType(req)
-             let searchTotalListResult = await article.searchProdctsList(req)
-             let searchTotalcategoryListResult = await article.searchcategoryList(req)
-             let searchTotalDetailListResult = await article.searchDetailList(req)
+             let searchTotalListTypeResult = await article.searchListType()
+             
+             let searchTotalListResult = await article.searchProdctsList()
+             
+             let searchTotalcategoryListResult = await article.searchcategoryList()
+             let searchTotalDetailListResult = await article.searchDetailList()  
              res.send({
                  sucess: 0,
                  data: {
@@ -146,43 +148,67 @@
              })
          }
      }
+
+     async searchTypeProductsList(req,res,next){
+        let searchTotalListTypeResult = await article.searchListType()
+        let resultArray = []
+        let result = await super.CustomForeach(searchTotalListTypeResult,async(items,index) => {
+             let searchProductsResult = await article.searchApiProdctsList(items.id)
+             if(searchProductsResult!=null){
+                items['listTwo'] = searchProductsResult
+             }
+             
+             resultArray.push(items)
+         })
+         res.send({
+             success:0,
+             info:'查询成功',
+             result:searchTotalListTypeResult
+         })
+     }
      async searchAdminName(req,res,next){
          try{
             let DetailId = req.body.id
+            let pageSize = req.body.pageSize
+            let currentPage = req.body.currentPage
             let detailListResult = []
             if(DetailId !=''&& DetailId !=null&& DetailId !=undefined){
                 detailListResult = await article.searchDetailIdList(req,DetailId)
+                detailListResult.rows = detailListResult
             }else{
-                detailListResult = await article.searchDetailList(req)
+                detailListResult = await article.searchDetailListCount(pageSize,currentPage)
             }
             let resultArray = new Array()
-          
-            const CustomForeach = async (arr, callback) => {
-                const length = arr.length;
-                const O = Object(arr);
-                let k = 0;
-                while (k < length) {
-                  if (k in O) {
-                    const kValue = O[k];
-                    await callback(kValue, k, O);
-                  }
-                  k++;
-                }
-            };
-            let result = await CustomForeach(detailListResult,async(items,index) => {
+            
+            let result = await super.CustomForeach(detailListResult.rows,async(items,index) => {
+                console.log(items)
                 const categoryNameResult = await article.searchCategoryIdNameList(items.categoryId)
                 items['categoryName'] = categoryNameResult.name
+
                 const productsNameResult = await article.searchProdctsIdNameList(categoryNameResult.productsId)
-                items['productsName'] = productsNameResult.productName
-                const typeNameResult = await article.searchFirstTypeIdNameList(productsNameResult.typeId)
-                items['typeName'] = typeNameResult.name
+                if(productsNameResult !=null){
+                    items['productsName'] = productsNameResult.productName
+                    const typeNameResult = await article.searchFirstTypeIdNameList(productsNameResult.typeId)
+                    if(typeNameResult!=null){
+                            items['typeName'] = typeNameResult.name
+                    }
+                }
                 resultArray.push(items)
             })
+            if(DetailId !=''&& DetailId !=null&& DetailId !=undefined){
+                res.send({
+                    success:0,
+                    result:resultArray
+                })
+            }else{
+                res.send({
+                    success:0,
+                    result:resultArray,
+                    count:detailListResult.count
+                })
+            }
 
-            res.send({
-                success:0,
-                result:resultArray
-            })
+        
          }catch (err) {
              console.log(err)
              res.send({
@@ -195,11 +221,33 @@
          try{
             let detailId = req.body.id
             let result = await article.deleteDetailList(detailId)
+            let resultCategory = await article.searchcategoryList()
+            let resultDetail = await super.CustomForeach(resultCategory,async(items,index) => {
+                let resultSarchDetail = await article.deleteSearchDetail(items.id)
+                if(resultSarchDetail == null ||resultSarchDetail == ''){
+                    let resultUpdateCategory = await article.deleteUpdateCategory(items.id)
+                }
+            })
+            let resultSearchCategory = await article.searchProdctsList()
+            let resuletProdcuts = await super.CustomForeach(resultSearchCategory,async(items,index) => {
+                let resultSarchCategory1 = await article.deleteSearchCategory(items.id)
+                if(resultSarchCategory1 == null ||resultSarchCategory1 == ''){
+                    let resultUpdateProducts = await article.deleteUpdateproducts(items.id)
+                }
+            })
+            let resultSearchType = await article.searchListType()
+            let resuletProcuts = await super.CustomForeach(resultSearchType,async(items,index) => {
+                let resultSearchProducts = await article.deleteSearchProducts(items.id)
+                if(resultSearchProducts == null ||resultSearchProducts == ''){
+                    let resultUpdateType = await article.deleteUpdateProductsType(items.id)
+                }
+            })
             res.send({
                 success: 0,
                 info:'删除成功'
             })
          }catch(err){
+            console.log(err)
             res.send({
                 success: -1,
                 info: '发生未知错误'

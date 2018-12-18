@@ -85,34 +85,65 @@ class article {
             detail:detail
         })
     }
-    searchListType(req){
+    searchListType(){
         return productType.findAll({
+            raw:true,
             where:{
                 isDel:0
             }
         })
     }
-    searchProdctsList(req){
+    apiSearchListType(){
+        let include = [{
+            association: productType.hasOne(products, {foreignKey:'id'}),
+            raw:true,
+            isDel:0
+        }]  
+        return productType.findAll({inclde:include})
+    }
+    searchProdctsList(){
         return products.findAll({
+            raw:true,
             where:{
                 isDel:0
             }
         })
     }
-    searchcategoryList(req){
+    searchApiProdctsList(typeId){
+        return products.findAll({
+            raw:true,
+            where:{
+                isDel:0,
+                typeId:typeId
+            }
+        })
+    }
+    searchcategoryList(){
         return productCategory.findAll({
+            raw:true,
             where:{
                 isDel:0
             }
         })
     }
-    searchDetailList(req){
+    searchDetailList(){
         return productDetail.findAll({
             raw:true,
             where:{
                 isDel:0
             }
         })
+    }
+    searchDetailListCount(pageSize,currentPage){
+        let offset = (currentPage - 1) * pageSize
+        return productDetail.findAndCountAll({
+            offset: offset,
+            limit: pageSize,
+            raw:true,
+            where:{
+                isDel:0
+            }
+        })    
     }
     searchDetailIdList(req,id){
         return productDetail.findAll({
@@ -172,7 +203,8 @@ class article {
             detail:detail
         },{
             where:{
-                id : id
+                id : id,
+                isDel:0
             }
         }
         )
@@ -182,10 +214,83 @@ class article {
             isDel :1
         },{
             where:{
-                id : id
+                id : id,
+                isDel:0
             }
         }   
         )
+    }
+    deleteSearchDetail(categoryId){
+        return productDetail.findAll({
+            where:{
+                categoryId:categoryId,
+                isDel:0
+            }
+        })
+    }
+    deleteUpdateCategory(id){
+        return productCategory.update(
+            {isDel:1},
+            {
+            where:{
+                id:id,
+                isDel:0
+            }
+        })
+    }
+    deleteSearchCategory(productsId){
+        return productCategory.findAll({
+            where:{
+                productsId:productsId,
+                isDel:0
+            }
+        })
+    }
+    deleteUpdateproducts(id){
+        return products.update(
+            {isDel:1},
+            {
+            where:{
+                id:id,
+                isDel:0
+            }
+        })
+    }
+    deleteSearchCategory(productsId){
+        return productCategory.findAll({
+            where:{
+                productsId:productsId,
+                isDel:0
+            }
+        })
+    }
+    deleteUpdateproducts(id){
+        return products.update(
+            {isDel:1},
+            {
+            where:{
+                id:id,
+                isDel:0
+            }
+        })
+    }
+    deleteSearchProducts(typeId){
+        return products.findAll({
+            where:{
+                typeId:typeId,
+                isDel:0
+            }
+        })
+    }
+    deleteUpdateProductsType(id){
+        return productType.update(
+            {isDel:1},
+            {
+            where:{
+                id:id,
+                isDel:0
+            }
+        })
     }
 }
 
