@@ -128,6 +128,6 @@ const SERVER_PORT = 8888
 server.listen(SERVER_PORT, () => {
   console.info(`服务已经启动，监听端口${SERVER_PORT}`)
 })
-const httpsPort = 1111
-httpsServer.listen(httpsPort,function () { console.log('Https server listening on port ' + httpsPort); });
+// const httpsPort = 1111
+// httpsServer.listen(httpsPort,function () { console.log('Https server listening on port ' + httpsPort); });
 export default app
