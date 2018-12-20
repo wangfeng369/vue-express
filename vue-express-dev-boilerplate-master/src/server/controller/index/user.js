@@ -30,11 +30,19 @@ class user extends base{
             let bg = req.files.bg
             let logo = req.files.logo
             let title = req.body.title
-            for(let i=0;i<bg.length;i++){
-                bgpic = bg[0].originalname
+            if(bg == undefined ||bg == null ||bg == ''){
+                bgpic = ''
+            }else{
+                for(let i=0;i<bg.length;i++){
+                    bgpic = bg[0].originalname
+                }
             }
-            for(let k=0;k<logo.length;k++){
-                logopic = logo[0].originalname
+            if(logo == undefined ||logo == null ||logo == '' ){
+                logopic = ''
+            }else{
+                for(let k=0;k<logo.length;k++){
+                    logopic = logo[0].originalname
+                }
             }
             let result = await User.createOrUpdateUserImageDao(bgpic,logopic,title)
             res.send({

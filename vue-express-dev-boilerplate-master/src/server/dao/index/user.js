@@ -14,16 +14,48 @@ class userDao{
     }
 
     async createOrUpdateUserImageDao(bgImage,logo,title){
-        return User.update({
-            bgImage:bgImage,
-            logo:logo,
-            title:title
-        },{
-            where:{
-                id:1
+        if(bgImage != ''&&logo!=''){
+            return User.update({
+                bgImage:bgImage,
+                logo:logo,
+                title:title
+            },{
+                where:{
+                    id:1
+                }
             }
+            )
+        }else if(bgImage == ''){
+            return User.update({
+                logo:logo,
+                title:title
+            },{
+                where:{
+                    id:1
+                }
+            }
+            )
+        }else if(logo == ''){
+            return User.update({
+                bgImage:bgImage,
+                title:title
+            },{
+                where:{
+                    id:1
+                }
+            }
+            )
+        }else{
+            return User.update({
+                title:title
+            },{
+                where:{
+                    id:1
+                }
+            }
+            )
         }
-        )
+   
     }
 }
 
