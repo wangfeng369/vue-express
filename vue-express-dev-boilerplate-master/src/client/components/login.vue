@@ -8,8 +8,8 @@
                 <form class="form">
                     <input v-if="signIn" type="text" placeholder="Username" v-model="name">
                     <input v-if="signIn" type="password" placeholder="Password" v-model="pwd">
-                    <button v-if="signInBtn" @click="signUpFc()">sign up</button>
-                    <button v-if="signUpBtn" @click="signInFc()">sign in</button>
+                    <button v-if="signInBtn" @click="signUpFc">sign up</button>
+                    <button v-if="signUpBtn" @click="signInFc">sign in</button>
                     <button v-if="signIn" type="submit" @click="submit()" id="login-button">Login</button>
                 </form>
             </div>
@@ -50,7 +50,7 @@
                 this.signIn = true
             },
             signUpFc: function(){
-                this.$router.push('path','./register.vue')
+                this.$router.push({'path':'./register'})
             },
             submit: function(){
                 let _this = this
@@ -64,9 +64,9 @@
                             alert(response.data.info)
                             return;
                         }
-                        sessionStorage.setItem('token',response.data.token);
+                        localStorage.setItem('token',response.data.token);
                         console.log(response.data.name)
-                        sessionStorage.setItem('username',response.data.name)
+                        localStorage.setItem('username',response.data.name)
                         _this.$router.push({'path':'./index'})
                        
                      })

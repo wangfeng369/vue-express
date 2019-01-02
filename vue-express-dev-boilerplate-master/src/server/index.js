@@ -10,6 +10,7 @@ import userRouter from './router/user'
 import fileRouter from './router/file'
 import apiRouter from './router/api'
 import articleRouter from './router/article'
+import weChat from './router/wechat'
 // 引入history模块
 import history from 'connect-history-api-fallback'
 import fs from 'fs'
@@ -20,6 +21,7 @@ const jwt = require('jsonwebtoken')
 const tokenCommon = require('./public/token')
 import config from '../../build/webpack.dev.conf'
 import socketFn from './controller/socket/socket'
+
 const https = require('https');
 const app = express()
 const server = require('http').createServer(app);
@@ -29,7 +31,7 @@ let certificate = fs.readFileSync('./src/server/config/1633057_www.wangfeng.kim.
 let options={key:privatekey, cert:certificate};
 let httpsServer = https.createServer(options, app);
 // 引入history模式让浏览器进行前端路由页面跳转
-app.use(history())
+// app.use(history())
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
@@ -64,11 +66,11 @@ app.use(function (req, res, next) {
   if(urlA[0] != undefined){
     urlB = urlA[0].split('/')
   }
-  console.log(urlB)
-  if (req.url != '/user/login' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket'&&urlB[1] !='api') {
+  if (urlB[0] !=''&&urlA[1] !='html'&&urlB[1] != 'user' && req.url != '/user/register' && urlA[1] != 'html'&&urlA[1] !='js' && req.url != '/__webpack_hmr'&&urlA[0] != '/socket'&&urlB[1] !='api') {
     let token = req.headers.token;
     jwt.verify(token, tokenCommon.secret, function (err, decoded) {
       if (err) {
+       
         res.send({
           success: false,
           message: 'token过期',
@@ -76,6 +78,7 @@ app.use(function (req, res, next) {
           err:err
         });
       } else {
+        
         next();
       }
     })
@@ -88,6 +91,7 @@ app.use('/user', userRouter)
 app.use('/article',articleRouter)
 app.use('/file', fileRouter)
 app.use('/api',apiRouter)
+app.use('/wechat',weChat)
 const compiler = webpack(config)
 //webpack 中间件
 app.use(webpackDevMiddleware(compiler, {
@@ -101,7 +105,8 @@ app.use(webpackHotMiddleware(compiler))
 
 app.use(express.static(path.join(__dirname, 'view')))
 app.get('/', function (req, res) {
-  res.sendFile('../views/index.html')
+ 
+    // res.sendFile('../views/index.html')
 })
 
 //socket部分

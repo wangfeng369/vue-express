@@ -1,15 +1,10 @@
 import express from 'express'
-import sequelize from '../config/db'
 const router = express.Router()
-const Student = require('../model/').student
-const Class = require('../model/').class
 const User = require('../model/').user
 const tokenScrete = require('../public/token')
-const multiparty = require('multiparty');
-const util = require('util');
-const fs = require('fs');
 const jwt = require('jsonwebtoken')
 const secret = tokenScrete.secret
+import UserControl from '../controller/index/user'
 /* GET home page. */
 router.get('/', function (req, res, next) {
     //   res.render('index', { title: 'Express' });
@@ -17,35 +12,8 @@ router.get('/', function (req, res, next) {
 
     // res.sendfile("./views/index.html");
 });
-// router.post('/userInfo', function (req, res, next) {
-//     let include = [{
-//         association: Student.belongsTo(Class, {
-//             foreignKey: 'classId'
-//         }),
-
-//     }];
-//     let currentPage = req.body.currentPage
-//     let pageSize = req.body.pageSize
-//     let totalCount = 0
-//     let offset = (currentPage - 1) * pageSize
-//     let _token = req.headers.token
-//     sequelize.transaction(t => {
-//         return Student.findAndCountAll({
-//                 include: include,
-//                 offset: offset,
-//                 limit: pageSize
-//             })
-//             .then((result) => {
-//                 totalCount = result.count
-//                 res.send({
-//                     'data': result.rows,
-//                     'totalCount': totalCount
-//                 })
-//             }).catch((err) => {
-//                 console.error(err);
-//             });
-//     })
-// })
+router.post('/code',UserControl.sendEmail)
+router.post('/registerAdmin',UserControl.registerAccount)
 router.post('/login', function (req, res, next) {
     let userName = req.body.userName
     let pwd = req.body.password

@@ -12,7 +12,8 @@ const sequelize = new Sequelize('food','root','wangfeng123',{
     define:{
         charset: 'utf8',
         underscored:true
-    }
+    },
+    timezone:'+08:00'
 })
 
 module.exports = sequelize;

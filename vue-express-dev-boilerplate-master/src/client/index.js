@@ -19,7 +19,7 @@ import socketio from 'socket.io-client'
 
 Vue.config.debug = true
 Vue.config.productionTip = false
-const debug = false
+const debug = true
 Vue.prototype.apiUrl = debug ? 'http://localhost:8888':'https://www.wangfeng.kim';
 Vue.prototype.$axios = axios
 Vue.use(ElementUI)
@@ -32,7 +32,7 @@ Vue.use(VueSocketio, socketio('http://localhost:8888'));
 axios.interceptors.request.use(
   config =>{
     //在发送请求之前做某事
-  let token = sessionStorage.getItem('token');
+  let token = localStorage.getItem('token');
   if(token){
     config.headers.token = token
   }

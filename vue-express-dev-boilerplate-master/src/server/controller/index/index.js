@@ -1,10 +1,26 @@
  import article from '../../dao/index/index'
  import base from '../base/index'
+ import fs from 'fs'
  const formidable = require("formidable");
+
+ /**
+  *
+  *
+  * @class index
+  * @extends {base}
+  */
  class index extends base {
      constructor() {
          super()
      }
+     /**
+      *
+      *
+      * @param {*} req
+      * @param {*} res
+      * @param {*} next
+      * @memberof index
+      */
      async createFile(req, res, next) {
          try {
              super.uploadFile()
@@ -12,6 +28,14 @@
              console.log(error)
          }
      }
+     /**
+      *
+      *
+      * @param {*} req
+      * @param {*} res
+      * @param {*} next
+      * @memberof index
+      */
      async indexArticle(req, res, next) {
          try {
              let result = await article.articleSearch(req)
@@ -47,13 +71,13 @@
              let detail = req.body.detail
              let file = req.files
              let picArray = []
+             let newPic = []
              let pic = ''
-             console.log(req.files)
              for(let i=0;i<file.length;i++){
-                picArray.push(file[i].originalname)
+                picArray.push(file[i].filename)
              }
+             console.log(JSON.stringify(file))
              pic = picArray.join()
-             console.log(pic)
              let categoryName = req.body.categoryName
              let productsName = req.body.productsName
              let typeName = req.body.typeName
@@ -83,19 +107,17 @@
                  categoryId = producsCategoryResult.id
              }
              let productsDeatilResult = await article.searchFoodList(req, foodName, categoryId)
-             console.log(productsDeatilResult)
              if (productsDeatilResult !='') {
                 if(changeDetailId !=''&& changeDetailId !=null&& changeDetailId !=undefined){
-                    // let changeDetailListResult = await article.searchOneDetailIdList(changeDetailId)
-                    // changeDetailListResult.name = foodName
-                    // changeDetailListResult.englishName = foodEnName
-                    // changeDetailListResult.code = foodCode
-                    // changeDetailListResult.size = foodSize
-                    // changeDetailListResult.deadline = deadLine
-                    // changeDetailListResult.place = palce
-                    // changeDetailListResult.pic = pic
-                    // let resulet = await changeDetailListResult.save()
-                    let changeDetailListResult = await article.updateDetail(changeDetailId,foodName, foodCode, foodEnName, foodSize, deadLine, palce, pic, price,detail,categoryId)
+                    if(req.body.oldImgList != ''){
+                        let oldImgList = req.body.oldImgList.split(',')
+                        newPic = oldImgList.concat(pic)
+                        newPic = newPic.join()
+                    }else{
+                        newPic = pic
+                    }
+                    
+                    let changeDetailListResult = await article.updateDetail(changeDetailId,foodName, foodCode, foodEnName, foodSize, deadLine, palce, newPic, price,detail,categoryId)
                     res.send({
                         success: 0,
                         info: '修改成功',
@@ -181,7 +203,6 @@
             let resultArray = new Array()
             
             let result = await super.CustomForeach(detailListResult.rows,async(items,index) => {
-                console.log(items)
                 const categoryNameResult = await article.searchCategoryIdNameList(items.categoryId)
                 items['categoryName'] = categoryNameResult.name
 
@@ -254,6 +275,17 @@
             })
          }
       
+     }
+     async deleteFile(req,res,next){
+        let path = 'upload//'
+        let deletFile =path + req.body.deleteFile
+        fs.unlink(deletFile,err=>{
+            res.send({
+                success:0,
+                info:'删除成功'
+            })
+        })
+    
      }
  }
 

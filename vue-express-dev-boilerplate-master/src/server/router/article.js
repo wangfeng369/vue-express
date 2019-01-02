@@ -11,4 +11,5 @@ router.post('/getTableList',index.searchAdminName)
 router.post('/deleteDetail',index.deleteDetail)
 router.post('/uploadBg',index.uploadFile().fields([{name:'bg'},{name:'logo'}]),User.createOrUpdateImage)
 router.post('/searchBg',User.searchUserImage)
+router.post('/deleteFile',index.deleteFile)
 module.exports = router;

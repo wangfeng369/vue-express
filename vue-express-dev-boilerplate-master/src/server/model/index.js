@@ -8,7 +8,8 @@ var sequelize = new Sequelize('food', 'root', 'wangfeng123', {
         max: 5,
         min: 0,
         idle: 10000
-    }
+    },
+    timezone:'+08:00'
 })
 // 数据库模型名称及lujing
 const models =[

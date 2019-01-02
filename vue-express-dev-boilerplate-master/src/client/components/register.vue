@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="用户名" prop="checkUserName">
+            <el-form-item label="用户名" prop="username" >
                 <el-input type="text" v-model="ruleForm2.username" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pass">
@@ -10,12 +10,20 @@
             <el-form-item label="确认密码" prop="checkPass">
                 <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="姓名" prop="checkName">
-                <el-input type="text" v-model="ruleForm2.name"></el-input>
+            <el-form-item label="邮箱" prop="email"
+                :rules="[
+                { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+                { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                ]">
+                <el-input type="text" v-model="ruleForm2.email"></el-input>
+            </el-form-item>
+            <el-form-item label='验证码' prop='code'>
+                 <el-input type="text" v-model="ruleForm2.code" style="width:200px;"></el-input>
+                <el-button type="primary" color="primary" @click="getcode">接收验证码</el-button>
             </el-form-item>
             <el-form-item>
-                <mu-button color="primary" @click="submitForm('ruleForm2')">提交</mu-button>
-                <mu-button @click="resetForm('ruleForm2')">重置</mu-button>
+                <el-button type="primary" color="primary" @click="submitForm('ruleForm2')">提交</el-button>
+                <el-button type="danger" @click="resetForm('ruleForm2')">重置</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -48,15 +56,11 @@
                     username: '',
                     pass: '',
                     checkPass: '',
-                    name: ''
-                },
-                formData: {
-                    username: '',
-                    pwd: '',
-                    name: ''
+                    email: '',
+                    code:''
                 },
                 rules2: {
-                    checkUserName: [{
+                    username: [{
                         required: true,
                         message: '用户名不能为空',
                         trigger: 'blur'
@@ -69,38 +73,50 @@
                         validator: validatePass2,
                         trigger: 'blur'
                     }],
-                    checkName: [{
+                    code:[{
                         required: true,
-                        message: '姓名不能为空',
+                        message: '验证码不能为空',
                         trigger: 'blur'
                     }]
                 }
             }
         },
         methods: {
+            getcode:function(){
+                _this.$axios.post('/user/code', {
+                    userName: userName,
+                    password: password,
+                    email:email
+                }, {
+                    'Content-Type': 'application/json'
+                })
+                .then(function (response) {
+                    if (!response.data.sucess) {
+                        return;
+                    }
+                })
+                .catch(function (error) {});
+            },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let _this = this
                         let userName = _this.ruleForm2.username
                         let password = _this.ruleForm2.pass
-                        let name = _this.ruleForm2.name
-                        _this.$axios.post('/user/register', {
+                        let email = _this.ruleForm2.email
+                        let code = _this.ruleForm2.code
+                        _this.$axios.post('/user/registerAdmin', {
                                 userName: userName,
                                 password: password,
-                                name:name
+                                email:email,
+                                code:code
                             }, {
                                 'Content-Type': 'application/json'
                             })
                             .then(function (response) {
-                                if (!response.data.sucess) {
-                                    alert(response.data.info)
+                                if (!response.data.success) {
                                     return;
                                 }
-                                _this.$router.push({
-                                    'path': './login'
-                                })
-
                             })
                             .catch(function (error) {});
                     } else {

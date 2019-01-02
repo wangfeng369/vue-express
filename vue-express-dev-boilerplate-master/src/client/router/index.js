@@ -35,6 +35,11 @@ var router = new Router({
       name:'login',
       path: '/login',
       component: login,
+    },
+    {
+      name:'register',
+      path: '/register',
+      component: register,
     }
   ]
 })

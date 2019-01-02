@@ -134,6 +134,14 @@ class article {
             }
         })
     }
+    /**
+     *
+     *
+     * @param {*} pageSize 
+     * @param {*} currentPage 
+     * @returns
+     * @memberof article
+     */
     searchDetailListCount(pageSize,currentPage){
         let offset = (currentPage - 1) * pageSize
         return productDetail.findAndCountAll({
@@ -190,6 +198,24 @@ class article {
             raw:true
         })
     }
+
+    /**
+     *
+     *
+     * @param {*} id 商品id
+     * @param {*} foodName 商品名称
+     * @param {*} foodCode 商品条形码
+     * @param {*} foodEnName 商品英文名称
+     * @param {*} foodSize 商品规格
+     * @param {*} deadLine 商品期限
+     * @param {*} palce 商品产地
+     * @param {*} pic 商品图片
+     * @param {*} price 商品价格
+     * @param {*} detail 商品描述
+     * @param {*} categoryId 上级id
+     * @returns
+     * @memberof article
+     */
     updateDetail(id,foodName,foodCode,foodEnName,foodSize,deadLine,palce,pic,price,detail,categoryId){
         return productDetail.update({
             name : foodName,

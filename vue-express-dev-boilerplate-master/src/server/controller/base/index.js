@@ -23,13 +23,12 @@ class Upload{
               },
               filename: function (req, file, cb) {
                   // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
-                  cb(null, file.originalname);  
+                  cb(null, new Date().getTime() + '-'+file.originalname);  
               }
           });
           
           // 通过 storage 选项来对 上传行为 进行定制化
           let upload = multer({ storage: storage })
-
           return upload
     }
     async CustomForeach(arr, callback){

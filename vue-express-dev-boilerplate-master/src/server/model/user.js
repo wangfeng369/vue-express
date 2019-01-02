@@ -1,4 +1,5 @@
 /* jshint indent: 1 */
+const moment = require('moment')
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('user', {
@@ -10,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		password: {
 			type: DataTypes.STRING(255),
-			allowNull: true,
+			allowNull: false,
 			defaultValue: ''
 		},
 		userName: {
@@ -35,6 +36,38 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
 			defaultValue: ''
 		},
+		createTime:{
+			field:"create_time",
+			type: DataTypes.DATE(),
+			allowNull: true,
+			get(){
+				return moment(this.getDataValue('createTime')).format('YYYY-MM-DD HH:mm')
+			}
+			
+		},
+		isLive:{
+			field:"is_live",
+			type: DataTypes.STRING(255),
+			allowNull: true,
+			defaultValue: 0
+		},
+		code:{
+			type: DataTypes.STRING(255),
+			allowNull: true,
+			defaultValue: 0
+		},
+		email:{
+			type: DataTypes.STRING(255),
+			allowNull: true,
+			defaultValue: ''
+		},
+		openId:{
+			field:"open_id",
+			type: DataTypes.STRING(255),
+			allowNull: true,
+			defaultValue: 0
+		},
+		
 	}, {
 		tableName: 'user',
 		timestamps: false,

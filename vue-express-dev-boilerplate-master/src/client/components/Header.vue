@@ -111,8 +111,8 @@
         console.log(hasLogin)
       },
       changeHasLogin:function(){
-        let token = sessionStorage.getItem('token')
-        let username = sessionStorage.getItem('username')
+        let token = localStorage.getItem('token')
+        let username = localStorage.getItem('username')
         if(token!=null||token!=undefined){
           this.hasNoLogin = false
           this.username = username
